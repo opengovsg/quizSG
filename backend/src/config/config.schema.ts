@@ -1,4 +1,4 @@
-import { Schema } from 'convict'
+import { Schema, addFormats } from 'convict'
 
 export interface ConfigSchema {
   port: number
@@ -11,8 +11,37 @@ export interface ConfigSchema {
     numValidPastWindows: number
     numValidFutureWindows: number
   }
+  db: {
+    host: string
+    username: string
+    password: string
+    port: number
+    database: string
+  }
   health: { heapSizeThreshold: number; rssThreshold: number }
 }
+
+/**
+ * To require an env var without setting a default,
+ * use
+ *    default: '',
+ *    format: 'required-string',
+ */
+addFormats({
+  'required-string': {
+    validate: (val: string): void => {
+      if (val === '') {
+        throw new Error('Required value cannot be empty')
+      }
+    },
+    coerce: (val: string | null): string | undefined => {
+      if (val === null) {
+        return undefined
+      }
+      return val
+    },
+  },
+})
 
 export const schema: Schema<ConfigSchema> = {
   port: {
@@ -79,6 +108,38 @@ export const schema: Schema<ConfigSchema> = {
       env: 'OTP_NUM_VALID_FUTURE_WINDOWS',
       format: 'int',
       default: 0,
+    },
+  },
+  db: {
+    host: {
+      doc: 'Database hostname',
+      env: 'DB_HOST',
+      default: 'localhost',
+      format: String,
+    },
+    username: {
+      doc: 'Database username',
+      env: 'DB_USERNAME',
+      default: '',
+      format: 'required-string',
+    },
+    password: {
+      doc: 'Database password',
+      env: 'DB_PASSWORD',
+      default: '',
+      format: String,
+    },
+    port: {
+      doc: 'Database host',
+      env: 'DB_PORT',
+      default: 5432,
+      format: 'int',
+    },
+    database: {
+      doc: 'Database host',
+      env: 'DB_DATABASE',
+      default: 'quizsg_db',
+      format: String,
     },
   },
   health: {
