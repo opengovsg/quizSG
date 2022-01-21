@@ -1,22 +1,31 @@
 import {
+  BelongsTo,
   Column,
   CreatedAt,
   DataType,
+  ForeignKey,
   HasMany,
   Model,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript'
-import { Quiz, UserQuizCategory } from '.'
+import { Quiz, User } from '.'
 
-@Table({ tableName: 'users' })
-export class User extends Model {
+@Table({ tableName: 'user-quiz-categories' })
+export class UserQuizCategory extends Model {
   @Column({
     primaryKey: true,
     type: DataType.INTEGER,
     autoIncrement: true,
   })
   id!: number
+
+  @ForeignKey(() => User)
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  userId!: number
 
   @Column({
     type: DataType.STRING,
@@ -25,15 +34,8 @@ export class User extends Model {
   })
   name!: string
 
-  @Column({
-    type: DataType.STRING,
-    unique: true,
-    allowNull: false,
-  })
-  email!: string
-
-  @HasMany(() => UserQuizCategory)
-  userQuizCategories!: UserQuizCategory[]
+  @BelongsTo(() => User)
+  user!: User
 
   @HasMany(() => Quiz)
   quizzes!: Quiz[]
