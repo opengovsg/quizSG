@@ -23,6 +23,7 @@ export class QuizQuestion extends Model {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    unique: 'quiz-question-unique',
   })
   quizId!: number
 
@@ -30,6 +31,7 @@ export class QuizQuestion extends Model {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    unique: 'quiz-question-unique',
   })
   questionId!: number
 
