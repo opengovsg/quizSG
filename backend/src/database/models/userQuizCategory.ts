@@ -22,7 +22,7 @@ export class UserQuizCategory extends Model {
 
   @ForeignKey(() => User)
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   userId!: number
