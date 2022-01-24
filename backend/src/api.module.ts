@@ -3,6 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize'
 import { ConfigModule } from 'config/config.module'
 import { TerminusModule } from '@nestjs/terminus'
 import { HealthModule } from './health/health.module'
+import { CreatorModule } from './creator/creator.module'
 import { ConfigService } from 'config/config.service'
 import { RouterModule } from '@nestjs/core'
 // TODO: to uncomment and implement should we decide to add these in
@@ -10,7 +11,7 @@ import { RouterModule } from '@nestjs/core'
 // import { OtpModule } from 'otp/otp.module'
 // import { MailerModule } from 'mailer/mailer.module'
 
-const apiModules = [TerminusModule, HealthModule]
+const apiModules = [TerminusModule, HealthModule, CreatorModule]
 
 @Module({
   imports: [
