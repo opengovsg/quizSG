@@ -17,6 +17,7 @@ import { OptionModule } from 'option/option.module'
 // import { OtpModule } from 'otp/otp.module'
 // import { MailerModule } from 'mailer/mailer.module'
 
+// TODO: to remove modules here that are used by other modules
 const apiModules = [
   TerminusModule,
   HealthModule,
