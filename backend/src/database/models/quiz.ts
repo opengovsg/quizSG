@@ -9,7 +9,7 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript'
-import { QuizQuestion, Submission, User, UserQuizCategory } from '.'
+import { Submission, User } from '.'
 
 @Table({ tableName: 'quizzes' })
 export class Quiz extends Model {
@@ -34,13 +34,6 @@ export class Quiz extends Model {
   })
   ownerId!: number
 
-  @ForeignKey(() => UserQuizCategory)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  categoryId!: number
-
   @Column({
     type: DataType.FLOAT,
     allowNull: false,
@@ -62,14 +55,8 @@ export class Quiz extends Model {
   @BelongsTo(() => User)
   user!: User
 
-  @BelongsTo(() => UserQuizCategory)
-  userQuizCategory!: UserQuizCategory
-
   @HasMany(() => Submission)
   submissions!: Submission[]
-
-  @HasMany(() => QuizQuestion)
-  quizQuestions!: QuizQuestion[]
 
   @CreatedAt
   createdAt!: Date

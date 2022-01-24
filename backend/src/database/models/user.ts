@@ -7,7 +7,7 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript'
-import { Quiz, UserQuizCategory } from '.'
+import { Quiz } from '.'
 
 @Table({ tableName: 'users' })
 export class User extends Model {
@@ -30,9 +30,6 @@ export class User extends Model {
     allowNull: false,
   })
   email!: string
-
-  @HasMany(() => UserQuizCategory)
-  userQuizCategories!: UserQuizCategory[]
 
   @HasMany(() => Quiz)
   quizzes!: Quiz[]

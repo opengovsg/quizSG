@@ -1,7 +1,5 @@
 export * from './user'
-export * from './userQuizCategory'
 export * from './quiz'
 export * from './submission'
-export * from './quizQuestion'
 export * from './question'
 export * from './option'

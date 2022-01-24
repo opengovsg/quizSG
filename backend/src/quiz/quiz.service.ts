@@ -13,7 +13,6 @@ export class QuizService {
   async createQuiz(
     userId: number,
     name: string,
-    categoryId: number,
     passingPercent: number,
     description: string,
     organisation: string
@@ -21,7 +20,6 @@ export class QuizService {
     return this.quizModel.create({
       name,
       ownerId: userId,
-      categoryId,
       passingPercent,
       description,
       organisation,
