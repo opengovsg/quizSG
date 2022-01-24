@@ -1,4 +1,6 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
+import { APP_FILTER } from '@nestjs/core'
+import { ErrorHandler } from 'appFilter/errorHandler'
 // import { ServeStaticModule } from '@nestjs/serve-static'
 import { HelmetMiddleware } from 'middlewares/helmet.middleware'
 import { SessionMiddleware } from 'middlewares/session.middleware'
@@ -24,6 +26,12 @@ import { ApiModule } from './api.module'
     //   },
     // }),
     ApiModule,
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: ErrorHandler,
+    },
   ],
 })
 export class AppModule implements NestModule {
