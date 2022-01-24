@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { Quiz } from '../database/models'
+import _ from 'lodash'
 
 @Injectable()
 export class QuizService {
@@ -17,13 +18,17 @@ export class QuizService {
     description: string,
     organisation: string
   ): Promise<Quiz> {
-    return this.quizModel.create({
-      name,
-      ownerId: userId,
-      passingPercent,
-      description,
-      organisation,
-    })
+    // TODO: find a way to not use lodash wrapper
+    return _.get(
+      await this.quizModel.create({
+        name,
+        ownerId: userId,
+        passingPercent,
+        description,
+        organisation,
+      }),
+      'dataValues'
+    )
   }
 
   async getAllFromCreator(userId: number): Promise<Quiz[]> {

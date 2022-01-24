@@ -50,11 +50,10 @@ export class Question extends Model {
 
   @Column({
     type: DataType.STRING(200),
-    allowNull: false,
+    allowNull: true,
   })
-  mediaURL!: string
+  mediaURL?: string
 
-  // TODO: test ENUM
   @Column({
     type: DataType.ENUM(...QUESTION_TYPES),
     allowNull: false,
