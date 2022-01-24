@@ -7,9 +7,9 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript'
-import { QuizQuestion, Option } from '.'
+import { Option } from '.'
 
-const QUESTION_TYPES = ['MCQ-1', 'MCM-M', 'T/F'] as const
+export const QUESTION_TYPES = ['MCQ-1', 'MCQ-M', 'T/F'] as const
 export type QuestionType = typeof QUESTION_TYPES[number]
 
 @Table({ tableName: 'questions' })
@@ -56,10 +56,7 @@ export class Question extends Model {
     type: DataType.INTEGER,
     allowNull: false,
   })
-  pointValue!: string
-
-  @HasMany(() => QuizQuestion)
-  quizQuestions!: QuizQuestion[]
+  pointValue!: number
 
   @HasMany(() => Option)
   options!: Option[]

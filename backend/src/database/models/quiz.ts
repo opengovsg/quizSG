@@ -9,7 +9,7 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript'
-import { QuizQuestion, Submission, User } from '.'
+import { Submission, User } from '.'
 
 @Table({ tableName: 'quizzes' })
 export class Quiz extends Model {
@@ -57,9 +57,6 @@ export class Quiz extends Model {
 
   @HasMany(() => Submission)
   submissions!: Submission[]
-
-  @HasMany(() => QuizQuestion)
-  quizQuestions!: QuizQuestion[]
 
   @CreatedAt
   createdAt!: Date
