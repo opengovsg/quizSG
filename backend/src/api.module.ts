@@ -6,12 +6,8 @@ import { HealthModule } from './health/health.module'
 import { ConfigService } from 'config/config.service'
 import { RouterModule } from '@nestjs/core'
 import { CreatorModule } from 'creator/creator.module'
-import { UserModule } from 'user/user.module'
-import { UserQuizCategoryModule } from 'userQuizCategory/userQuizCategory.module'
 import { SubmissionModule } from 'submission/submission.module'
 import { QuizQuestionModule } from 'quizQuestion/quizQuestion.module'
-import { QuestionModule } from 'question/question.module'
-import { OptionModule } from 'option/option.module'
 // TODO: to uncomment and implement should we decide to add these in
 // import { AuthModule } from 'auth/auth.module'
 // import { OtpModule } from 'otp/otp.module'
@@ -22,12 +18,8 @@ const apiModules = [
   TerminusModule,
   HealthModule,
   CreatorModule,
-  UserModule,
-  UserQuizCategoryModule,
   SubmissionModule,
   QuizQuestionModule,
-  QuestionModule,
-  OptionModule,
 ]
 
 @Module({
