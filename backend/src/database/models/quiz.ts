@@ -9,7 +9,7 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript'
-import { Submission, User } from '.'
+import { Question, Submission, User } from '.'
 
 @Table({ tableName: 'quizzes' })
 export class Quiz extends Model {
@@ -54,6 +54,9 @@ export class Quiz extends Model {
 
   @BelongsTo(() => User)
   user!: User
+
+  @HasMany(() => Question)
+  questions!: Question[]
 
   @HasMany(() => Submission)
   submissions!: Submission[]

@@ -1,13 +1,15 @@
 import {
+  BelongsTo,
   Column,
   CreatedAt,
   DataType,
+  ForeignKey,
   HasMany,
   Model,
   Table,
   UpdatedAt,
 } from 'sequelize-typescript'
-import { Option } from '.'
+import { Option, Quiz } from '.'
 
 export const QUESTION_TYPES = ['MCQ-1', 'MCQ-M', 'T/F'] as const
 export type QuestionType = typeof QUESTION_TYPES[number]
@@ -20,6 +22,13 @@ export class Question extends Model {
     autoIncrement: true,
   })
   id!: number
+
+  @ForeignKey(() => Quiz)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  quizId!: number
 
   @Column({
     type: DataType.TEXT,
@@ -57,6 +66,9 @@ export class Question extends Model {
     allowNull: false,
   })
   pointValue!: number
+
+  @BelongsTo(() => Quiz)
+  quiz!: Quiz
 
   @HasMany(() => Option)
   options!: Option[]
