@@ -47,12 +47,12 @@ export class CreatorController {
 
     // 2. Add row(s) to Question table
     const questions = await this.questionService.bulkCreate(
-      createQuizDto.questions.map((fullQuestionData) =>
-        this.questionService.transformFullDataToBulkCreateData(
-          quiz.id,
-          fullQuestionData
-        )
-      )
+      createQuizDto.questions.map((fullQuestionData) => {
+        return {
+          quizId: quiz.id,
+          ...fullQuestionData,
+        }
+      })
     )
 
     // 3. Add row(s) to Option table
