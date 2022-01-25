@@ -35,8 +35,8 @@ export class ErrorHandler extends BaseExceptionFilter {
     if (typeof response === 'string') return response
     return _.get(response, 'message')
   }
-  catch(error: unknown, host: ArgumentsHost) {
-    Logger.error(error)
+  catch(error: unknown, host: ArgumentsHost): void {
+    Logger.error(_.get(error, 'original') ?? error)
     const response = host.switchToHttp().getResponse<Response>()
     const statusCode = this.determineStatusCode(error)
     response.status(statusCode).json({
