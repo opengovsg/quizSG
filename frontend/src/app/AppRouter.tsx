@@ -12,11 +12,11 @@ export const AppRouter = (): JSX.Element => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Switch>
-        <PublicRoute path={ROOT_ROUTE} strict={false}>
-          <LandingPage />
-        </PublicRoute>
         <PublicRoute exact path={CREATOR_ROUTE} strict={false}>
           <CreatorLandingPage />
+        </PublicRoute>
+        <PublicRoute path={ROOT_ROUTE} strict={false}>
+          <LandingPage />
         </PublicRoute>
         <Route path="*">
           <div>404</div>
