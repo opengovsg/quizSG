@@ -19,7 +19,7 @@ import {
   CreateQuizRequestDto,
   CreateQuizResponseDto,
 } from './dto/create-quiz.dto'
-import { CreateOption } from 'option/dto/create-option.dto'
+import { CreateOptionDB } from 'option/dto/create-option.dto'
 import { IsNumberStringValidator } from 'helpers/isNumberStringValidator'
 
 @Controller('creator')
@@ -67,13 +67,13 @@ export class CreatorController {
             return {
               ...option,
               questionId: questions[idx].id, // to grab questionId from returned quiz array from db
-            } as CreateOption
+            } as CreateOptionDB
           }
         )
         acc = [...acc, ...optionsAppendedWithQuestionid]
         return acc
       },
-      [] as CreateOption[]
+      [] as CreateOptionDB[]
     )
     const options = await this.optionService.bulkCreate(createOptionArr)
 

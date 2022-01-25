@@ -34,7 +34,7 @@ export class CreateQuestionRequestDto {
   options!: CreateOptionRequestDto[]
 }
 
-export type CreateQuestion = Omit<CreateQuestionRequestDto, 'options'> & {
+export type CreateQuestionDB = Omit<CreateQuestionRequestDto, 'options'> & {
   quizId: number
 }
 

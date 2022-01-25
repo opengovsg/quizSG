@@ -9,7 +9,7 @@ export class CreateOptionRequestDto {
   isTrue!: boolean
 }
 
-export type CreateOption = CreateOptionRequestDto & {
+export type CreateOptionDB = CreateOptionRequestDto & {
   questionId: number
 }
 
