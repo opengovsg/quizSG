@@ -3,17 +3,21 @@
 # Please see the documentation for all configuration options:
 # https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
+# Note: Open PR limit has been set to 0 as it's too noisy during prototyping
 version: 2
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 0
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/frontend" # Location of package manifests
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 0
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/backend" # Location of package manifests
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 0
