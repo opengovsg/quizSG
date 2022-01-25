@@ -6,6 +6,9 @@ import {
   Res,
   Get,
   InternalServerErrorException,
+  Delete,
+  Param,
+  NotFoundException,
 } from '@nestjs/common'
 import { Response } from 'express'
 import { OptionService } from 'option/option.service'
@@ -16,8 +19,8 @@ import {
   CreateQuizRequestDto,
   CreateQuizResponseDto,
 } from './dto/create-quiz.dto'
-import { CreateQuestionResponseDto } from 'question/dto/create-question.dto'
 import { CreateOption } from 'option/dto/create-option.dto'
+import { IsNumberStringValidator } from 'helpers/isNumberStringValidator'
 
 @Controller('creator')
 export class CreatorController {
@@ -33,6 +36,7 @@ export class CreatorController {
     @Res() res: Response,
     @Body() createQuizDto: CreateQuizRequestDto
   ): Promise<void> {
+    // TODO: to refactor when there are more than 1 admin user
     const admin = await this.userService.getFirst()
     if (!admin) throw new InternalServerErrorException('Admin user not present')
 
@@ -74,25 +78,35 @@ export class CreatorController {
     const options = await this.optionService.bulkCreate(createOptionArr)
 
     // 4. Forming response wrapped with ids returned from DB
-    const response: CreateQuizResponseDto = {
-      ...quiz,
-      questions: questions.map((question) => {
-        const correspondingOptions = options.filter(
-          (option) => option.questionId === question.id
-        )
-        return {
-          ...question,
-          options: correspondingOptions,
-        } as CreateQuestionResponseDto
-      }),
-    } as CreateQuizResponseDto
+    const response: CreateQuizResponseDto = this.quizService.formQuizResponse(
+      quiz,
+      questions,
+      options
+    )
 
     res.status(HttpStatus.CREATED).json(response)
   }
 
   @Get('quizzes')
   async getAll(@Res() res: Response): Promise<void> {
-    const quizzes = await this.quizService.getAllFromCreator(1)
+    // TODO: to refactor when there are more than 1 admin user
+    const admin = await this.userService.getFirst()
+    if (!admin) throw new InternalServerErrorException('Admin user not present')
+    const quizzes = await this.quizService.getAllFromCreator(admin.id)
     res.status(HttpStatus.OK).json(quizzes)
+  }
+
+  @Delete('quiz/:id')
+  async deleteOne(
+    @Res() res: Response,
+    @Param() param: IsNumberStringValidator
+  ): Promise<void> {
+    // TODO: to refactor when there are more than 1 admin user
+    const admin = await this.userService.getFirst()
+    if (!admin) throw new InternalServerErrorException('Admin user not present')
+    const numDeleted = await this.quizService.deleteOnQuizId(param.id, admin.id)
+    // TODO: to separate out 403 and 404 errors
+    if (numDeleted === 0) throw new NotFoundException()
+    res.status(HttpStatus.NO_CONTENT).send()
   }
 }
