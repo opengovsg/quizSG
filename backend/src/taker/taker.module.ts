@@ -6,6 +6,7 @@ import { Quiz } from 'database/models'
 import { UserModule } from 'user/user.module'
 import { QuestionModule } from 'question/question.module'
 import { OptionModule } from 'option/option.module'
+import { TakerService } from './taker.service'
 
 @Module({
   imports: [
@@ -16,5 +17,6 @@ import { OptionModule } from 'option/option.module'
     OptionModule,
   ],
   controllers: [TakerController],
+  providers: [TakerService],
 })
 export class TakerModule {}
