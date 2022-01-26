@@ -16,6 +16,7 @@ async function bootstrap() {
   if (['staging', 'production'].includes(environment)) {
     app.set('trust proxy', 1)
   }
+  app.enableCors()
 
   await app.listen(config.get('port'))
 }
