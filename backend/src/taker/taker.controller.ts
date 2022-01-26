@@ -1,59 +1,18 @@
-import { Controller, HttpStatus, Res, Get } from '@nestjs/common'
+import {
+  Controller,
+  HttpStatus,
+  Res,
+  Get,
+  Param,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { OptionService } from 'option/option.service'
 import { QuestionService } from 'question/question.service'
 import { QuizService } from 'quiz/quiz.service'
 import { UserService } from 'user/user.service'
-
-const dummyQuiz = {
-  id: 12345,
-  name: 'This is a great quiz',
-  ownerId: 12345,
-  createdAt: '2022-01-20T09:31:25.265Z',
-  description: 'In this quiz, we will test your knowledge of OGP',
-  questions: [
-    {
-      id: 12345,
-      text: 'Bla bla bla question 1?',
-      details: 'extra info about the question 1',
-      type: 'MCQ-M',
-      options: [
-        {
-          id: 1234,
-          text: 'Option 1',
-        },
-        {
-          id: 2345,
-          text: 'Option 2',
-        },
-        {
-          id: 3456,
-          text: 'Option 2',
-        },
-      ],
-    },
-    {
-      id: 12345,
-      text: 'Bla bla bla question 2?',
-      details: 'extra info about question 2',
-      type: 'MCQ-1',
-      options: [
-        {
-          id: 1234,
-          text: 'Option 1',
-        },
-        {
-          id: 2345,
-          text: 'Option 2',
-        },
-        {
-          id: 3456,
-          text: 'Option 2',
-        },
-      ],
-    },
-  ],
-}
+import { IsNumberStringValidator } from 'helpers/isNumberStringValidator'
 
 @Controller('')
 export class TakerController {
@@ -64,8 +23,18 @@ export class TakerController {
     private readonly optionService: OptionService
   ) {}
 
-  @Get('quiz/:quizid/attempt')
-  async getAll(@Res() res: Response): Promise<void> {
-    res.status(HttpStatus.OK).json(dummyQuiz)
+  @Get('quiz/:id/attempt')
+  async getAll(
+    @Res() res: Response,
+    @Param() param: IsNumberStringValidator
+  ): Promise<void> {
+    const admin = await this.userService.getFirst()
+    if (!admin) throw new InternalServerErrorException('Admin user not present')
+    const quiz = await this.quizService.getQuiz(param.id)
+
+    if (!quiz) throw new NotFoundException()
+    res
+      .status(HttpStatus.OK)
+      .json(this.quizService.formQuizAttemptResponse(quiz))
   }
 }
