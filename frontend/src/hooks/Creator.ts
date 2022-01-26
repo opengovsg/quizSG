@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { useMutation, useQuery } from 'react-query'
 
 import QuizApi, { QuizCreationDto } from '~services/QuizApi'
