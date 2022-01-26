@@ -51,8 +51,10 @@ export class TakerController {
 
     try {
       this.takerService.assertValidSubmission(quiz, submission)
-    } catch (err) {
-      throw new BadRequestException('Response does not match quiz definition')
+    } catch (err: any) {
+      throw new BadRequestException(
+        `Response does not match quiz definition: ${err.message}`
+      )
     }
 
     try {
