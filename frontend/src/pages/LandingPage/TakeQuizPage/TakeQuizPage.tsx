@@ -105,21 +105,26 @@ const LandingPage = ({
           ut erat ut dui tempus aliquet a a augue. Etiam fermentum imperdiet
           ligula, at tincidunt diam elementum vel.
         </Text>
-        <Flex mt={10}>
-          <Input
-            required
-            value={name}
-            placeholder="E.g. Tim"
-            type="text"
-            onChange={(e) => {
-              setName(e.target.value)
-            }}
-            mr={2}
-          />
-          <Button colorScheme="primary" type="submit">
-            Take Quiz →
-          </Button>
-        </Flex>
+        <Box mt={10}>
+          <Text fontWeight="bold" textStyle="subhead-1">
+            Your name
+          </Text>
+          <Flex mt={2}>
+            <Input
+              required
+              value={name}
+              placeholder="E.g. Tim"
+              type="text"
+              onChange={(e) => {
+                setName(e.target.value)
+              }}
+              mr={2}
+            />
+            <Button colorScheme="primary" type="submit">
+              Take Quiz →
+            </Button>
+          </Flex>
+        </Box>
       </GridItem>
     </Grid>
   </Container>
