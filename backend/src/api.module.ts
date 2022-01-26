@@ -7,6 +7,7 @@ import { ConfigService } from 'config/config.service'
 import { RouterModule } from '@nestjs/core'
 import { CreatorModule } from 'creator/creator.module'
 import { SubmissionModule } from 'submission/submission.module'
+import { TakerModule } from 'taker/taker.module'
 // TODO: to uncomment and implement should we decide to add these in
 // import { AuthModule } from 'auth/auth.module'
 // import { OtpModule } from 'otp/otp.module'
@@ -17,6 +18,7 @@ const apiModules = [
   TerminusModule,
   HealthModule,
   CreatorModule,
+  TakerModule,
   SubmissionModule,
 ]
 

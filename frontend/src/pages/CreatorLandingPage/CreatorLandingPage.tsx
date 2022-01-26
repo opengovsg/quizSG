@@ -1,6 +1,10 @@
 import { Flex } from '@chakra-ui/react'
 
+import { useFetchAllQuizzes } from '~hooks/Creator'
+
 const CreatorLandingPage = (): JSX.Element => {
+  const { allQuizzes } = useFetchAllQuizzes()
+  console.log(allQuizzes)
   return <Flex flexDir="column">Creator Landing Page</Flex>
 }
 
