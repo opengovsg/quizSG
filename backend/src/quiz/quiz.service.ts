@@ -40,7 +40,6 @@ export class QuizService {
   async deleteOnQuizId(quizId: number, userId: number): Promise<number> {
     return this.quizModel.destroy({
       where: { id: quizId, ownerId: userId },
-      cascade: true,
     })
   }
 
