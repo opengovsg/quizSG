@@ -38,7 +38,7 @@ export class TakerService {
 
         if (!quizOption) {
           throw new Error(
-            `Submitted option ${optionId} not found in quiz definition.`
+            `Submitted option ${optionId} in question ${submittedQuestion.id} not found in quiz definition.`
           )
         }
       })
