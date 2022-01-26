@@ -4,7 +4,7 @@ import QuizApi, { QuizCreationDto } from '~services/QuizApi'
 
 const ALL_QUIZZES_QUERY_KEY = ['all_quizzes']
 
-export default function useFetchAllQuizzes() {
+export function useFetchAllQuizzes() {
   const {
     data: response,
     refetch,
