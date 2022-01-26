@@ -10,6 +10,8 @@ import {
 
 import { ROOT_ROUTE } from '~constants/routes'
 
+import Header from './components/Header'
+
 const LandingPage = (): JSX.Element => {
   const history = useHistory()
 
@@ -21,7 +23,7 @@ const LandingPage = (): JSX.Element => {
     history.push(`${ROOT_ROUTE}${quizId}`)
   }
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" bg="primary.100">
       Default Landing Page
       <form onSubmit={handleSubmit}>
         <FormControl>
@@ -35,6 +37,12 @@ const LandingPage = (): JSX.Element => {
           Enter Quiz
         </Button>
       </form>
+      <Header />
+      <Flex justifyContent="center">
+        <Button textStyle="h4" px={20} my={20}>
+          Create a Quiz
+        </Button>
+      </Flex>
     </Flex>
   )
 }
