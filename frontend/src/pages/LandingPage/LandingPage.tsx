@@ -21,7 +21,7 @@ const LandingPage = (): JSX.Element => {
     history.push(`${ROOT_ROUTE}${quizId}`)
   }
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" bg="primary.600">
       Default Landing Page
       <form onSubmit={handleSubmit}>
         <FormControl>
