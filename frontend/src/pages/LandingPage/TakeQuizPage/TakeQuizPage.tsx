@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {
   Box,
-  Button,
   Container,
   Flex,
   Grid,
@@ -11,7 +10,9 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-// import {} from '@chakra-ui/icons'
+import { Button } from '@opengovsg/design-system-react'
+
+import QuestionPage from './components/QuestionPage'
 
 const TakeQuizPage = (): JSX.Element => {
   const { quizId } = useParams<{ quizId: string }>()
@@ -38,8 +39,11 @@ const TakeQuizPage = (): JSX.Element => {
 
   return (
     <>
-      <Header />
-      <LandingPage name={name} setName={setName} />
+      <Box bg="primary.100" h="100vh">
+        <Header />
+        <LandingPage name={name} setName={setName} />
+        <QuestionPage />
+      </Box>
     </>
   )
 }
