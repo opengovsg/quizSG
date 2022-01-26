@@ -10,6 +10,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
+// import {} from '@chakra-ui/icons'
 
 const TakeQuizPage = (): JSX.Element => {
   const { quizId } = useParams<{ quizId: string }>()
@@ -19,7 +20,7 @@ const TakeQuizPage = (): JSX.Element => {
     return (
       <VStack
         padding="50px"
-        background="teal.600" // to change
+        background="teal.600"
         borderStyle="solid"
         justify="space-between"
         align="center"
@@ -34,51 +35,60 @@ const TakeQuizPage = (): JSX.Element => {
     )
   }
 
-  const LandingPage = (): JSX.Element => {
-    return (
-      <Grid minH="100vh">
-        <Flex
-          padding="100px 200px"
-          background="gray.50"
-          justify="space-between"
-        >
-          <Box h="40%" w="30%" bg="gray.400" flex={1} marginRight={20} />
-          <VStack flex={1} alignContent="left">
-            <Text>
-              The Nationanl heritage of singpaore Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Proin non lacinia leo, at laoreet
-              arcu. Orci varius natoque penatibus et magnis dis parturient
-              montes, nascetur ridiculus mus. Sed gravida sem a augue accumsan
-              dictum. Vivamus pellentesque odio eget nibh vehicula consectetur.
-              Etiam at porta purus, tempus accumsan lacus. Nam nec pellentesque
-              erat. Donec ut erat ut dui tempus aliquet a a augue. Etiam
-              fermentum imperdiet ligula, at tincidunt diam elementum vel.
-            </Text>
-            <HStack>
-              <Input
-                required
-                value={name}
-                placeholder="Your name"
-                type="text"
-                onChange={(event) => setName(event.target.value)}
-              />
-              <Button colorScheme="primary" type="submit">
-                Take Quiz →
-              </Button>
-            </HStack>
-          </VStack>
-        </Flex>
-      </Grid>
-    )
-  }
-
   return (
     <>
       <Header />
-      <LandingPage />
+      <LandingPage name={name} setName={setName} />
     </>
   )
 }
+
+const LandingPage = ({
+  name,
+  setName,
+}: {
+  name: string
+  setName: (name: string) => void
+}): JSX.Element => (
+  <Grid minH="100vh">
+    <Flex padding="100px 200px" background="gray.50" justify="space-between">
+      <Box h="50%" w="30%" bg="gray.400" flex={1} marginRight={20} />
+      <VStack flex={1} align="stretch">
+        <Text>
+          The Nationanl heritage of singpaore Lorem ipsum dolor sit amet,
+          consectetur adipiscing elit. Proin non lacinia leo, at laoreet arcu.
+          Orci varius natoque penatibus et magnis dis parturient montes,
+          nascetur ridiculus mus. Sed gravida sem a augue accumsan dictum.
+          Vivamus pellentesque odio eget nibh vehicula consectetur. Etiam at
+          porta purus, tempus accumsan lacus. Nam nec pellentesque erat. Donec
+          ut erat ut dui tempus aliquet a a augue. Etiam fermentum imperdiet
+          ligula, at tincidunt diam elementum vel.
+        </Text>
+        <Text fontWeight="bold">Your name</Text>
+        <HStack>
+          <Input
+            required
+            value={name}
+            placeholder="E.g. Tim"
+            type="text"
+            onChange={(e) => {
+              setName(e.target.value)
+            }}
+          />
+          <Button
+            colorScheme="primary"
+            type="submit"
+            onSubmit={(e) => {
+              e.preventDefault()
+            }}
+          >
+            Take Quiz →
+          </Button>
+        </HStack>
+      </VStack>
+    </Flex>
+  </Grid>
+)
 
 // Required to be default due to using dynamic import for lazy loading.
 export default TakeQuizPage
