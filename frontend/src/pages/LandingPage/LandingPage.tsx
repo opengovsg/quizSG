@@ -47,7 +47,7 @@ const LandingPage = (): JSX.Element => {
     //     </Button>
     //   </form>
     // </Flex>
-    <Box bg="primary.100">
+    <Box bg="primary.100" minH="100vh">
       <Header subhead={SUBHEAD}>{HEADER}</Header>
       <Feature onButtonClick={goToCreatorDashboard} />
       <QuizFeatureInfo

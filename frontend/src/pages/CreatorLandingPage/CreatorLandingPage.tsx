@@ -54,7 +54,7 @@ const CreatorLandingPage = (): JSX.Element => {
   const onClickQuiz = (quizId: number) => history.push(`/${quizId}`)
 
   return (
-    <VStack>
+    <VStack bg="primary.100" minH="100vh">
       <Box
         d="flex"
         flexDirection="column"
@@ -80,7 +80,7 @@ const CreatorLandingPage = (): JSX.Element => {
           </Button>
         </Flex>
         {/* Render Table Headers */}
-        <Table variant="striped" colorScheme="secondary">
+        <Table variant="striped" colorScheme="secondary" boxShadow="md">
           <Thead bg="secondary.500">
             <Tr>
               <>
