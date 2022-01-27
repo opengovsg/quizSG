@@ -6,14 +6,12 @@ export type QuizCreationDto = {
   questions: QuestionCreationDto[]
 }
 
-export type Quiz =
-  | QuizCreationDto
-  | {
-      id: number
-      ownerId: number
-      createdAt: string
-      updatedAt: string
-    }
+export type Quiz = QuizCreationDto & {
+  id: number
+  ownerId: number
+  createdAt: string
+  updatedAt: string
+}
 
 export type QuestionCreationDto = {
   text: string
