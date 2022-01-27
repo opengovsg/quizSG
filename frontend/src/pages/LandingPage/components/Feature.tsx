@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react'
+import { MouseEventHandler } from 'react'
 import { Box, Container, Image, SimpleGrid, Text } from '@chakra-ui/react'
 import { Button } from '@opengovsg/design-system-react'
 

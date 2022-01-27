@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
