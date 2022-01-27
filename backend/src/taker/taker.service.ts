@@ -1,4 +1,4 @@
-import { Quiz, Question } from '../database/models'
+import { Quiz, Question, Submission } from '../database/models'
 import { SubmissionDto } from './dto/submit-quiz.dto'
 import _ from 'lodash'
 
@@ -111,5 +111,23 @@ export class TakerService {
     markResult.result.pass = score / total >= quiz.passingPercent
 
     return markResult
+  }
+
+  async recordSubmission(
+    quiz: Quiz,
+    submission: any,
+    markedSubmission: any,
+    req: any
+  ): Promise<Submission> {
+    console.log(quiz.id)
+
+    return Submission.create({
+      quizId: quiz.id,
+      name: submission.name,
+      scorePercent:
+        markedSubmission.result.score / markedSubmission.result.total,
+      submission: JSON.stringify(markedSubmission),
+      sourceIP: req.ip, // probably wrong, get IP in a better way taking trusted proxies into account
+    })
   }
 }
