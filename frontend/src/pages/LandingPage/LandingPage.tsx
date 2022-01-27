@@ -11,13 +11,16 @@ import {
 import { Button } from '@opengovsg/design-system-react'
 
 import { CREATOR_ROUTE } from '~constants/routes'
+import Header from '~components/Header'
 
 import Feature from './components/Feature'
-import Header from './components/Header'
 import QuizFeatureInfo from './components/QuizFeatureInfo'
 import billing from './images/img-billing.png'
 import noresponse from './images/img-noresponse.png'
 import responses from './images/img-responses.png'
+
+const HEADER = 'QuizSG'
+const SUBHEAD = 'Hack For Public Good 2022'
 
 const LandingPage = (): JSX.Element => {
   const history = useHistory()
@@ -45,7 +48,7 @@ const LandingPage = (): JSX.Element => {
     //   </form>
     // </Flex>
     <Box bg="primary.100">
-      <Header />
+      <Header subhead={SUBHEAD}>{HEADER}</Header>
       <Feature onButtonClick={goToCreatorDashboard} />
       <QuizFeatureInfo
         imagePosition="right"
