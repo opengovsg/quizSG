@@ -4,6 +4,7 @@ import { Box, Container, GridItem, SimpleGrid, VStack } from '@chakra-ui/react'
 
 import Header from '~components/Header'
 import NewQuestion from '~components/NewQuestion'
+import QuestionField from '~components/QuestionField'
 
 import QuizConfigurationForm from './QuizConfigurationForm'
 
@@ -24,6 +25,7 @@ const CreateQuizPage = (): JSX.Element => {
         <SimpleGrid columns={12} spacing={5} style={{ padding: 10 }}>
           <GridItem colSpan={8}>
             <NewQuestion />
+            <QuestionField />
           </GridItem>
           <GridItem bg="aliceblue" colSpan={4}>
             <Box bg="white" p={6} borderRadius="lg" boxShadow="sm">
