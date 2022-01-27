@@ -1,1 +1,1 @@
-export { default } from './TakeQuizPage'
+export { default } from './TakeQuizPageContainer'
