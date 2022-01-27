@@ -1,34 +1,47 @@
 import { Container } from '@chakra-ui/react'
 
-import { SubmitQuizResponseDto } from '~services/QuizApi/taker'
+import {
+  QuestionInGetQuizDto,
+  SubmitQuizAnswerResponseDto,
+  SubmitQuizResultResponseDto,
+} from '~services/QuizApi/taker'
 
 import FinalScore from './FinalScore'
 import MarkedQuestion from './MarkedQuestion'
 
 type Props = {
-  submission: SubmitQuizResponseDto
+  submissionResult: SubmitQuizResultResponseDto
+  submissionAnswers: SubmitQuizAnswerResponseDto[]
+  questions: QuestionInGetQuizDto[]
 }
 
-const ResultsPage = ({ submission }: Props): JSX.Element => {
+const ResultsPage = ({
+  submissionResult,
+  submissionAnswers,
+  questions,
+}: Props): JSX.Element => {
   return (
     <Container maxW="container.xl" py={20}>
       <FinalScore
         finalPercent={Math.ceil(
-          (submission.result.score / submission.result.total) * 100,
+          (submissionResult.score / submissionResult.total) * 100,
         )}
-        passingPercent={submission.result.passingPercent * 100}
-        pass={submission.result.pass}
+        passingPercent={submissionResult.passingPercent * 100}
+        pass={submissionResult.pass}
       />
-      {/* {answers.map((answer, index) => {
+      {submissionAnswers.map((answer, index) => {
+        const question = questions[index]
         return (
-          <MarkedQuestion
-            key={index}
-            answer={answer}
-            index={index}
-            question={questions[index]}
-          />
+          question.type !== 'MCQ-M' && (
+            <MarkedQuestion
+              key={index}
+              index={index}
+              answer={answer}
+              question={question}
+            />
+          )
         )
-      })} */}
+      })}
     </Container>
   )
 }

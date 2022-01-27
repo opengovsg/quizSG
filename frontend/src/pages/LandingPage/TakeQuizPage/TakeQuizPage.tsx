@@ -72,7 +72,11 @@ const TakeQuizPage = ({
         />
       )}
       {phase === Phases.SUBMITTED && submission && (
-        <ResultsPage submission={submission as SubmitQuizResponseDto} />
+        <ResultsPage
+          submissionResult={submission.result}
+          submissionAnswers={submission.answers}
+          questions={quiz.questions}
+        />
       )}
     </Box>
   )
