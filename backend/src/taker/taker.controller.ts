@@ -2,6 +2,7 @@ import {
   Controller,
   HttpStatus,
   Res,
+  Req,
   Get,
   Post,
   Body,
@@ -10,7 +11,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common'
-import { Response } from 'express'
+import { Response, Request } from 'express'
 import { QuizService } from 'quiz/quiz.service'
 import { IsNumberStringValidator } from 'helpers/isNumberStringValidator'
 import { SubmissionDto } from './dto/submit-quiz.dto'
@@ -41,6 +42,7 @@ export class TakerController {
 
   @Post('quiz/:id/submission')
   async postSubmission(
+    @Req() req: Request,
     @Res() res: Response,
     @Body() submission: SubmissionDto,
     @Param() param: IsNumberStringValidator
@@ -50,18 +52,29 @@ export class TakerController {
     if (!quiz) throw new NotFoundException()
 
     try {
+      // TODO: zod should be used for this
       this.takerService.assertValidSubmission(quiz, submission)
     } catch (err: any) {
       throw new BadRequestException(
-        `Response does not match quiz definition: ${err.message}`
+        `Response does not match quiz definition: ${err?.message}`
       )
     }
 
     try {
       const submissionResponse = this.takerService.mark(quiz, submission)
+
+      this.takerService.recordSubmission(
+        quiz,
+        submission,
+        submissionResponse,
+        req
+      )
+
       res.status(HttpStatus.OK).json(submissionResponse)
-    } catch (err) {
-      throw new InternalServerErrorException('Unable to mark quiz submission')
+    } catch (err: any) {
+      throw new InternalServerErrorException(
+        `Unable to mark quiz submission: ${err?.message}`
+      )
     }
   }
 }
