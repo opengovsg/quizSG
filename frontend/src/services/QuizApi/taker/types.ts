@@ -20,4 +20,3 @@ export type Option = {
   id: number
   text: string
 }
-export type Quiz = Omit<GetQuizDto, 'questions'>
