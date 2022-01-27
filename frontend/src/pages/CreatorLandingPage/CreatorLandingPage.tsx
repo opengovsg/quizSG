@@ -1,6 +1,5 @@
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import {
-  Box,
   Container,
   Flex,
   Table,
@@ -17,6 +16,7 @@ import _ from 'lodash'
 import moment from 'moment-timezone'
 
 import { useFetchAllQuizzes } from '~hooks/Creator'
+import Header from '~components/Header'
 
 const HEADING = 'Creator Dashboard'
 const TABLE_HEADING = 'Your Quizzes'
@@ -54,18 +54,7 @@ const CreatorLandingPage = (): JSX.Element => {
 
   return (
     <VStack bg="primary.100" minH="100vh">
-      <Box
-        d="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        color="white"
-        bg="primary.500"
-        py="16"
-        w="100%"
-      >
-        <Text textStyle="h1">{HEADING}</Text>
-      </Box>
+      <Header w="100%">{HEADING}</Header>
       <Container maxW="container.xl" color="primary.900">
         <Flex
           flexDirection="row"
