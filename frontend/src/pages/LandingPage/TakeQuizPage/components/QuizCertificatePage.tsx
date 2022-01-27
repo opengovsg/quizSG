@@ -27,8 +27,9 @@ const QuizCertificatePage = ({
           Congratulations, {name}!
         </Text>
         <Text textStyle="h1" color="primary.500" mt={24} mx={24}>
-          You have successfully completed the {quizName} set by {organisation}{' '}
-          on {new Date().toDateString()}. Go forth and spread the knowledge!!
+          You have successfully completed <b>{quizName}</b> set by{' '}
+          <b>{organisation}</b> on {new Date().toDateString()}. Go forth and
+          spread the knowledge!!
         </Text>
       </Box>
     </Container>
