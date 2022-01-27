@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react'
 
-import { GetQuizDto } from '~services/QuizApi/taker'
+import { GetQuizDto, SubmitQuizResponseDto } from '~services/QuizApi/taker'
 
 import Header from './components/Header'
 import LandingPage from './components/LandingPage'
@@ -21,6 +21,7 @@ type Props = {
   onPreviousButtonClick: () => void
   onNextButtonClick: () => void
   onQuizSubmit: () => void
+  submission: SubmitQuizResponseDto | null
 }
 
 const TakeQuizPage = ({
@@ -36,6 +37,7 @@ const TakeQuizPage = ({
   onPreviousButtonClick,
   onNextButtonClick,
   onQuizSubmit,
+  submission,
 }: Props): JSX.Element => {
   return (
     <Box bg="primary.100">
@@ -69,7 +71,9 @@ const TakeQuizPage = ({
           onQuizSubmit={onQuizSubmit}
         />
       )}
-      {phase === Phases.SUBMITTED && <ResultsPage />}
+      {phase === Phases.SUBMITTED && submission && (
+        <ResultsPage submission={submission as SubmitQuizResponseDto} />
+      )}
     </Box>
   )
 }

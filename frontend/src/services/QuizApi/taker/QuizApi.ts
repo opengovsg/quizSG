@@ -9,13 +9,13 @@ function getQuiz({ id }: { id: string }): Promise<GetQuizDto> {
 
 function submitQuiz({
   id,
-  SubmitQuizRequestDto,
+  submitQuizRequestDto,
 }: {
   id: string
-  SubmitQuizRequestDto: SubmitQuizRequestDto
+  submitQuizRequestDto: SubmitQuizRequestDto
 }): Promise<SubmitQuizResponseDto> {
   console.log('[POST] postSubmission')
-  return ApiService.post(`quiz/${id}/submission`, SubmitQuizRequestDto).then(
+  return ApiService.post(`quiz/${id}/submission`, submitQuizRequestDto).then(
     (res) => res.data,
   )
 }

@@ -26,11 +26,11 @@ export function useSubmitQuiz() {
   const { mutateAsync, error, isLoading } = useMutation(
     ({
       id,
-      SubmitQuizRequestDto,
+      submitQuizRequestDto,
     }: {
       id: string
-      SubmitQuizRequestDto: SubmitQuizRequestDto
-    }) => QuizApi.submitQuiz({ id, SubmitQuizRequestDto }),
+      submitQuizRequestDto: SubmitQuizRequestDto
+    }) => QuizApi.submitQuiz({ id, submitQuizRequestDto }),
   )
 
   return {

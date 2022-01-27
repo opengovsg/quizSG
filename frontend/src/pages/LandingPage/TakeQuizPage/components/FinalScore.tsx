@@ -1,7 +1,16 @@
-import React from 'react'
 import { Box, Text } from '@chakra-ui/react'
 
-const FinalScore = (): JSX.Element => {
+type Props = {
+  finalPercent: number
+  passingPercent: number
+  pass: boolean
+}
+
+const FinalScore = ({
+  finalPercent,
+  passingPercent,
+  pass,
+}: Props): JSX.Element => {
   return (
     <Box
       bg="white"
@@ -12,9 +21,11 @@ const FinalScore = (): JSX.Element => {
       textAlign="center"
     >
       <Box my={6}>
-        <Text textStyle="display-2">Final Score: 80% (PASS)</Text>
+        <Text textStyle="display-2">
+          Final Score: {finalPercent}% ({pass ? 'PASS' : 'FAIL'})
+        </Text>
         <Text textStyle="subhead-1" mt={2}>
-          Passing Score: 50%
+          Passing Score: {passingPercent}%
         </Text>
       </Box>
     </Box>

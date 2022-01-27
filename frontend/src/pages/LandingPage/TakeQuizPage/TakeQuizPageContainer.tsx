@@ -3,7 +3,11 @@ import { useParams } from 'react-router-dom'
 import { Flex } from '@chakra-ui/react'
 
 import { useFetchQuiz, useSubmitQuiz } from '~hooks/Taker'
-import { Answer, SubmitQuizRequestDto } from '~services/QuizApi/taker'
+import {
+  Answer,
+  SubmitQuizRequestDto,
+  SubmitQuizResponseDto,
+} from '~services/QuizApi/taker'
 
 import TakeQuizPage from './TakeQuizPage'
 
@@ -24,7 +28,9 @@ const TakeQuizPageContainer = (): JSX.Element => {
     Array(quiz?.questions.length),
   )
   const [optionSelected, setOptionSelected] = useState<string[]>([])
-  const [submission, setSubmission] = useState<any>(null)
+  const [submission, setSubmission] = useState<SubmitQuizResponseDto | null>(
+    null,
+  )
 
   // TODO: to render toast on fetchQuizError using useEffect()
   if (
@@ -71,7 +77,7 @@ const TakeQuizPageContainer = (): JSX.Element => {
     const reformattedAnswer = updatedAnswers.map((answer) => {
       return answer.map((option) => parseInt(option))
     })
-    const SubmitQuizRequestDto: SubmitQuizRequestDto = {
+    const submitQuizRequestDto: SubmitQuizRequestDto = {
       name: takerName,
       questions: updatedAnswers.map((_, idx) => {
         return {
@@ -80,9 +86,9 @@ const TakeQuizPageContainer = (): JSX.Element => {
         }
       }),
     }
-    console.log(SubmitQuizRequestDto)
-    const response = await submitQuiz({ id: quizId, SubmitQuizRequestDto })
-    console.log(response)
+    const response = await submitQuiz({ id: quizId, submitQuizRequestDto })
+    setSubmission(response)
+    setPhase(Phases.SUBMITTED)
   }
 
   return (
@@ -99,6 +105,7 @@ const TakeQuizPageContainer = (): JSX.Element => {
       onPreviousButtonClick={onPreviousButtonClick}
       onNextButtonClick={onNextButtonClick}
       onQuizSubmit={onQuizSubmit}
+      submission={submission}
     />
   )
 }
