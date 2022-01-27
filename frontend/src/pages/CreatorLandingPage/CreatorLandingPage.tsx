@@ -1,16 +1,19 @@
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import {
-  Button,
+  Box,
   Container,
+  Flex,
   Heading,
   Table,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
   VStack,
 } from '@chakra-ui/react'
+import { Button } from '@opengovsg/design-system-react'
 import _ from 'lodash'
 import moment from 'moment-timezone'
 
@@ -52,21 +55,39 @@ const CreatorLandingPage = (): JSX.Element => {
 
   return (
     <VStack>
-      <Heading as="h1">{HEADING}</Heading>
-      <Container maxW="container.xl">
-        <Button colorScheme="teal" size="lg" onClick={onClickCreateQuiz}>
-          {CREATE_QUIZ_BUTTON_TEXT}
-        </Button>
-        <Heading as="h3" size="lg">
-          {TABLE_HEADING}
-        </Heading>
+      <Box
+        d="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        color="white"
+        bg="primary.500"
+        py="16"
+        w="100%"
+      >
+        <Text textStyle="h1">{HEADING}</Text>
+      </Box>
+      <Container maxW="container.xl" color="primary.900">
+        <Flex
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
+          my={6}
+        >
+          <Text textStyle="h2">{TABLE_HEADING}</Text>
+          <Button colorScheme="primary" size="lg" onClick={onClickCreateQuiz}>
+            {CREATE_QUIZ_BUTTON_TEXT}
+          </Button>
+        </Flex>
         {/* Render Table Headers */}
-        <Table variant="striped" colorScheme="teal">
-          <Thead>
+        <Table variant="striped" colorScheme="secondary">
+          <Thead bg="secondary.500">
             <Tr>
               <>
                 {_.map(TABLE_CONFIG, (config) => (
-                  <Th key={config.key}>{config.display}</Th>
+                  <Th key={config.key} color="white">
+                    {config.display}
+                  </Th>
                 ))}
               </>
             </Tr>
@@ -77,7 +98,15 @@ const CreatorLandingPage = (): JSX.Element => {
               {_.map(allQuizzes, (quiz) => {
                 const { id } = quiz
                 return (
-                  <Tr key={id} onClick={() => onClickQuiz(id)}>
+                  <Tr
+                    key={id}
+                    onClick={() => onClickQuiz(id)}
+                    _hover={{
+                      background: 'white',
+                      color: 'primary.500',
+                      cursor: 'pointer',
+                    }}
+                  >
                     {_.map(TABLE_CONFIG, (config) => {
                       const { key, fn } = config
                       return <Td key={key}>{fn(_.get(quiz, key))}</Td>
