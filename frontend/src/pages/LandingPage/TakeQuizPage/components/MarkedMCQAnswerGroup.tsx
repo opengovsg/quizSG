@@ -20,11 +20,7 @@ const MarkedMCQAnswerGroup = ({
   return (
     <>
       <Box bg="white" borderRadius="lg" boxShadow="sm" p="6" my={4}>
-        <Text
-          color={
-            submittedAnswer === correctAnswer ? 'success.600' : 'danger.600'
-          }
-        >
+        <Text color={isCorrect ? 'success.600' : 'danger.600'}>
           Your Answer
         </Text>
         <RadioGroup value={submittedAnswer.toString()} mt={4}>

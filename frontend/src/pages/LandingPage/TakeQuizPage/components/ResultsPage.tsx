@@ -34,14 +34,12 @@ const ResultsPage = ({
       {submissionAnswers.map((answer, index) => {
         const question = questions[index]
         return (
-          question.type !== 'MCQ-M' && (
-            <MarkedQuestion
-              key={index}
-              index={index}
-              answer={answer}
-              question={question}
-            />
-          )
+          <MarkedQuestion
+            key={index}
+            index={index}
+            answer={answer}
+            question={question}
+          />
         )
       })}
       {submissionResult.pass && (
