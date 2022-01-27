@@ -1,4 +1,4 @@
-import { Button, Container } from '@chakra-ui/react'
+import { Button, Container, Flex } from '@chakra-ui/react'
 
 import {
   QuestionInGetQuizDto,
@@ -45,11 +45,16 @@ const ResultsPage = ({
         )
       })}
       {submissionResult.pass && (
-        <Container alignItems="center">
-          <Button variant="solid" onClick={onViewCertificateButtonClick}>
+        <Flex justifyContent="center">
+          <Button
+            textStyle="h1"
+            px={20}
+            my={20}
+            onClick={onViewCertificateButtonClick}
+          >
             Go to Quiz Certificate →
           </Button>
-        </Container>
+        </Flex>
       )}
     </Container>
   )
