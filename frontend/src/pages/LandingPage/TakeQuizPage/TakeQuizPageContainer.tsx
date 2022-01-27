@@ -11,6 +11,7 @@ const TakeQuizPageContainer = (): JSX.Element => {
   const { quiz, fetchQuizError } = useFetchQuiz(quizId)
   const [takerName, setTakerName] = useState<string>('')
 
+  console.log(quiz)
   // TODO: to render toast on fetchQuizError using useEffect()
   if (
     !quiz ||
