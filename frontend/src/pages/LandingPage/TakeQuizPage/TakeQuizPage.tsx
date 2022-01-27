@@ -12,11 +12,24 @@ import {
 } from '@chakra-ui/react'
 import { Button } from '@opengovsg/design-system-react'
 
+// import { useFetchQuiz } from '~hooks/Taker'
 import QuestionPage from './components/QuestionPage'
+// import {} from '@chakra-ui/icons'
 
 const TakeQuizPage = (): JSX.Element => {
   const { quizId } = useParams<{ quizId: string }>()
   const [name, setName] = useState('')
+  const [quiz, setQuiz] = useState<any>()
+
+  // async function fetchQuiz() {
+  //   const quiz = await useFetchQuiz()
+  //   console.log('foo')
+  //   console.log(quiz)
+  //   setQuiz(quiz?.getQuiz)
+  // }
+  // useEffect(() => {
+  //   fetchQuiz()
+  // }, [])
 
   const Header = (): JSX.Element => {
     return (
