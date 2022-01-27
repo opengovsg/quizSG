@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react'
-import { Box, GridItem, SimpleGrid, VStack } from '@chakra-ui/react'
+import { Box, Container, GridItem, SimpleGrid, VStack } from '@chakra-ui/react'
 
 import Header from '~components/Header'
 
@@ -17,19 +17,21 @@ const CreateQuizPage = (): JSX.Element => {
   const [quizConfig, setQuizConfig] = useState(DEFAULT_QUIZ_CONFIG)
   const [questions, setQuestions] = useState([])
   return (
-    <VStack bg="primary.100" alignItems="stretch">
+    <Box bg="primary.100" alignItems="stretch" minH="100vh">
       <Header>New Quiz</Header>
-      <SimpleGrid columns={12} spacing={5} style={{ padding: 10 }}>
-        <GridItem bg="lightblue" colSpan={8}>
-          New question
-        </GridItem>
-        <GridItem bg="aliceblue" colSpan={4}>
-          <Box bg="white" style={{ borderRadius: 20, padding: 20 }}>
-            <QuizConfigurationForm quizConfig={quizConfig} />
-          </Box>
-        </GridItem>
-      </SimpleGrid>
-    </VStack>
+      <Container maxW="container.xl">
+        <SimpleGrid columns={12} spacing={5} style={{ padding: 10 }}>
+          <GridItem bg="lightblue" colSpan={8}>
+            New question
+          </GridItem>
+          <GridItem bg="aliceblue" colSpan={4}>
+            <Box bg="white" style={{ borderRadius: 20, padding: 20 }}>
+              <QuizConfigurationForm quizConfig={quizConfig} />
+            </Box>
+          </GridItem>
+        </SimpleGrid>
+      </Container>
+    </Box>
   )
 }
 
