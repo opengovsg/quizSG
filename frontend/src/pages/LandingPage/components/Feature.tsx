@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 import { Box, Container, Image, SimpleGrid, Text } from '@chakra-ui/react'
 import { Button } from '@opengovsg/design-system-react'
 
-const Feature = (props: any): JSX.Element => {
+const Feature = ({
+  onButtonClick,
+}: {
+  onButtonClick?: MouseEventHandler
+}): JSX.Element => {
   return (
     <Container maxW="container.xl" my={24} py={16} bg="success.200">
       <SimpleGrid columns={2} spacing={10} alignItems="center">
@@ -16,6 +20,7 @@ const Feature = (props: any): JSX.Element => {
             // rightIcon={<BiRightArrowAlt fontSize="1.5rem" />}
             variant="solid"
             mt={6}
+            onClick={onButtonClick}
           >
             Go to Creator Dashboard
           </Button>

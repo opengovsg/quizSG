@@ -1,3 +1,4 @@
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import {
   Box,
@@ -9,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { Button } from '@opengovsg/design-system-react'
 
-import { ROOT_ROUTE } from '~constants/routes'
+import { CREATOR_ROUTE } from '~constants/routes'
 
 import Feature from './components/Feature'
 import Header from './components/Header'
@@ -18,12 +19,11 @@ import QuizFeatureInfo from './components/QuizFeatureInfo'
 const LandingPage = (): JSX.Element => {
   const history = useHistory()
 
-  const handleSubmit = (e: any) => {
+  const goToCreatorDashboard = (e: React.MouseEvent) => {
     // Prevent default which reloads the page
     // Instead call the primary event
     e.preventDefault()
-    const quizId = e.target[0].value
-    history.push(`${ROOT_ROUTE}${quizId}`)
+    history.push(`${CREATOR_ROUTE}`)
   }
   return (
     // <Flex flexDir="column" bg="primary.600">
@@ -43,7 +43,7 @@ const LandingPage = (): JSX.Element => {
     // </Flex>
     <Box bg="primary.100">
       <Header />
-      <Feature />
+      <Feature onButtonClick={goToCreatorDashboard} />
       <QuizFeatureInfo
         imagePosition="right"
         featureHeading="Multiple Question Types"
@@ -64,7 +64,7 @@ const LandingPage = (): JSX.Element => {
         imageSource="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
       />
       <Flex justifyContent="center">
-        <Button textStyle="h4" px={20} my={20}>
+        <Button textStyle="h4" px={20} my={20} onClick={goToCreatorDashboard}>
           Go to Creator Dashboard
         </Button>
       </Flex>
