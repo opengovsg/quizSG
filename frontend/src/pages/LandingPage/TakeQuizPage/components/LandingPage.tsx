@@ -33,13 +33,13 @@ const LandingPage = ({
           <Text fontWeight="bold" textStyle="subhead-1">
             Your name
           </Text>
-          <Flex mt={2}>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                onTakeQuizSubmit()
-              }}
-            >
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              onTakeQuizSubmit()
+            }}
+          >
+            <Flex mt={2}>
               <Input
                 required
                 value={takerName}
@@ -53,8 +53,8 @@ const LandingPage = ({
               <Button colorScheme="primary" type="submit">
                 Take Quiz →
               </Button>
-            </form>
-          </Flex>
+            </Flex>
+          </form>
         </Box>
       </GridItem>
     </Grid>
