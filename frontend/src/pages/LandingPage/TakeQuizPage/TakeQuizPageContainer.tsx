@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Flex } from '@chakra-ui/react'
 
-import { useFetchQuiz } from '~hooks/Taker'
-import { Answer, SubmitQuizDto } from '~services/QuizApi/taker'
+import { useFetchQuiz, useSubmitQuiz } from '~hooks/Taker'
+import { Answer, SubmitQuizRequestDto } from '~services/QuizApi/taker'
 
 import TakeQuizPage from './TakeQuizPage'
 
@@ -16,6 +16,7 @@ export enum Phases {
 const TakeQuizPageContainer = (): JSX.Element => {
   const { quizId } = useParams<{ quizId: string }>()
   const { quiz, fetchQuizError } = useFetchQuiz(quizId)
+  const { submitQuiz, submitQuizError } = useSubmitQuiz()
   const [takerName, setTakerName] = useState<string>('')
   const [phase, setPhase] = useState<Phases>(Phases.BEFORE_TAKING)
   const [questionIdx, setQuestionIdx] = useState<number>(0)
@@ -23,6 +24,7 @@ const TakeQuizPageContainer = (): JSX.Element => {
     Array(quiz?.questions.length),
   )
   const [optionSelected, setOptionSelected] = useState<string[]>([])
+  const [submission, setSubmission] = useState<any>(null)
 
   // TODO: to render toast on fetchQuizError using useEffect()
   if (
@@ -64,12 +66,12 @@ const TakeQuizPageContainer = (): JSX.Element => {
     setQuestionIdx(questionIdx + 1)
   }
 
-  const onQuizSubmit = () => {
+  const onQuizSubmit = async () => {
     const updatedAnswers = formNewAnswerState()
     const reformattedAnswer = updatedAnswers.map((answer) => {
       return answer.map((option) => parseInt(option))
     })
-    const submitQuizDto: SubmitQuizDto = {
+    const SubmitQuizRequestDto: SubmitQuizRequestDto = {
       name: takerName,
       questions: updatedAnswers.map((_, idx) => {
         return {
@@ -78,7 +80,9 @@ const TakeQuizPageContainer = (): JSX.Element => {
         }
       }),
     }
-    console.log(submitQuizDto)
+    console.log(SubmitQuizRequestDto)
+    const response = await submitQuiz({ id: quizId, SubmitQuizRequestDto })
+    console.log(response)
   }
 
   return (

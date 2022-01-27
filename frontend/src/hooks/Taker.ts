@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 
-import QuizApi from '~services/QuizApi/taker'
+import QuizApi, { SubmitQuizRequestDto } from '~services/QuizApi/taker'
 
 export function useFetchQuiz(id: string) {
   const TAKER_QUIZ_QUERY_KEY = ['taker_quiz', { id }]
@@ -19,5 +19,23 @@ export function useFetchQuiz(id: string) {
     fetchQuizStatus: status,
     isFetchingQuiz: isFetching,
     fetchQuizError: error,
+  }
+}
+
+export function useSubmitQuiz() {
+  const { mutateAsync, error, isLoading } = useMutation(
+    ({
+      id,
+      SubmitQuizRequestDto,
+    }: {
+      id: string
+      SubmitQuizRequestDto: SubmitQuizRequestDto
+    }) => QuizApi.submitQuiz({ id, SubmitQuizRequestDto }),
+  )
+
+  return {
+    submitQuiz: mutateAsync,
+    submitQuizError: error,
+    isSubmitQuizLoading: isLoading,
   }
 }

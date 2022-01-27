@@ -14,7 +14,7 @@ import {
 import { Response, Request } from 'express'
 import { QuizService } from 'quiz/quiz.service'
 import { IsNumberStringValidator } from 'helpers/isNumberStringValidator'
-import { SubmissionDto } from './dto/submit-quiz.dto'
+import { SubmissionRequestDto } from './dto/submit-quiz.dto'
 import { TakerService } from './taker.service'
 
 @Controller('')
@@ -44,13 +44,12 @@ export class TakerController {
   async postSubmission(
     @Req() req: Request,
     @Res() res: Response,
-    @Body() submission: SubmissionDto,
+    @Body() submission: SubmissionRequestDto,
     @Param() param: IsNumberStringValidator
   ): Promise<void> {
     const quiz = await this.quizService.getQuiz(param.id)
 
     if (!quiz) throw new NotFoundException()
-
     try {
       // TODO: zod should be used for this
       this.takerService.assertValidSubmission(quiz, submission)

@@ -38,41 +38,39 @@ const TakeQuizPage = ({
   onQuizSubmit,
 }: Props): JSX.Element => {
   return (
-    <>
-      <Box bg="primary.100">
-        <Header
-          quizName={quiz.name}
-          numQuestions={quiz.questions.length}
-          questionIdx={questionIdx}
-          phase={phase}
+    <Box bg="primary.100">
+      <Header
+        quizName={quiz.name}
+        numQuestions={quiz.questions.length}
+        questionIdx={questionIdx}
+        phase={phase}
+      />
+      {phase === Phases.BEFORE_TAKING && (
+        <LandingPage
+          quizDescription={quiz.description}
+          takerName={takerName}
+          setTakerName={setTakerName}
+          onTakeQuizSubmit={onTakeQuizSubmit}
         />
-        {phase === Phases.BEFORE_TAKING && (
-          <LandingPage
-            quizDescription={quiz.description}
-            takerName={takerName}
-            setTakerName={setTakerName}
-            onTakeQuizSubmit={onTakeQuizSubmit}
-          />
-        )}
-        {phase === Phases.TAKING && (
-          <QuestionPage
-            index={questionIdx}
-            title={quiz.questions[questionIdx].text}
-            pointValue={quiz.questions[questionIdx].pointValue}
-            description={quiz.questions[questionIdx].details}
-            type={quiz.questions[questionIdx].type}
-            isLastQuestion={isLastQuestion}
-            options={quiz.questions[questionIdx].options}
-            optionSelected={optionSelected}
-            onOptionSelected={onOptionSelected}
-            onPreviousButtonClick={onPreviousButtonClick}
-            onNextButtonClick={onNextButtonClick}
-            onQuizSubmit={onQuizSubmit}
-          />
-        )}
-        {phase === Phases.SUBMITTED && <ResultsPage />}
-      </Box>
-    </>
+      )}
+      {phase === Phases.TAKING && (
+        <QuestionPage
+          index={questionIdx}
+          title={quiz.questions[questionIdx].text}
+          pointValue={quiz.questions[questionIdx].pointValue}
+          description={quiz.questions[questionIdx].details}
+          type={quiz.questions[questionIdx].type}
+          isLastQuestion={isLastQuestion}
+          options={quiz.questions[questionIdx].options}
+          optionSelected={optionSelected}
+          onOptionSelected={onOptionSelected}
+          onPreviousButtonClick={onPreviousButtonClick}
+          onNextButtonClick={onNextButtonClick}
+          onQuizSubmit={onQuizSubmit}
+        />
+      )}
+      {phase === Phases.SUBMITTED && <ResultsPage />}
+    </Box>
   )
 }
 

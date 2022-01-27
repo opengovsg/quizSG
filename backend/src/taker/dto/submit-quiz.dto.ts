@@ -1,6 +1,6 @@
 import { IsNumber, IsNotEmpty, MinLength } from 'class-validator'
 
-export class QuestionAnswerDto {
+export class QuestionAnswerRequestDto {
   @IsNumber()
   id!: number
 
@@ -8,10 +8,31 @@ export class QuestionAnswerDto {
   answer!: number[]
 }
 
-export class SubmissionDto {
+export class SubmissionRequestDto {
   @MinLength(1)
   name!: string
 
   @IsNotEmpty()
-  questions!: QuestionAnswerDto[]
+  questions!: QuestionAnswerRequestDto[]
+}
+
+export type SubmissionResponseDto = {
+  id: number
+  result: SubmissionResultResponseDto
+  answers: SubmissionAnswerResponseDto[]
+}
+
+export type SubmissionResultResponseDto = {
+  score: number
+  total: number
+  pass: boolean
+  passingPercent: number
+}
+
+export type SubmissionAnswerResponseDto = {
+  id: number
+  submittedAnswer: number[]
+  correctAnswer: number[]
+  isCorrect: boolean
+  explanation: string
 }

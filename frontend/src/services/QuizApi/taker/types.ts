@@ -25,10 +25,31 @@ export type Option = {
 
 export type Answer = string[]
 
-export type SubmitQuizDto = {
+export type SubmitQuizRequestDto = {
   name: string
   questions: {
     id: number
     answer: number[]
   }[]
+}
+
+export type SubmitQuizResponseDto = {
+  id: number
+  result: SubmitQuizResultResponseDto
+  answers: SubmitQuizAnswerResponseDto[]
+}
+
+export type SubmitQuizResultResponseDto = {
+  score: number
+  total: number
+  pass: boolean
+  passingPercent: number
+}
+
+export type SubmitQuizAnswerResponseDto = {
+  id: number
+  submittedAnswer: number[]
+  correctAnswer: number[]
+  isCorrect: boolean
+  explanation: string
 }

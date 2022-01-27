@@ -1,13 +1,19 @@
 import { Quiz, Question, Submission } from '../database/models'
-import { SubmissionDto } from './dto/submit-quiz.dto'
+import {
+  SubmissionAnswerResponseDto,
+  SubmissionRequestDto,
+  SubmissionResponseDto,
+} from './dto/submit-quiz.dto'
 import _ from 'lodash'
+import { Req } from '@nestjs/common'
+import { Request } from 'express'
 
 function asId(a: number, b: number) {
   return a - b
 }
 
 export class TakerService {
-  assertValidSubmission(quiz: Quiz, submission: SubmissionDto): void {
+  assertValidSubmission(quiz: Quiz, submission: SubmissionRequestDto): void {
     // 0. verify that submission has a name
     if (!submission.name?.length) {
       throw new Error(`Submission came without a name`)
@@ -60,8 +66,8 @@ export class TakerService {
     }
   }
 
-  mark(quiz: Quiz, submission: SubmissionDto): any {
-    const markResult = {
+  mark(quiz: Quiz, submission: SubmissionRequestDto): SubmissionResponseDto {
+    const markResult: SubmissionResponseDto = {
       id: quiz.id,
       result: {
         score: 0,
@@ -69,7 +75,7 @@ export class TakerService {
         pass: false,
         passingPercent: quiz.passingPercent,
       },
-      answers: [] as any[],
+      answers: [] as SubmissionAnswerResponseDto[],
     }
 
     const { total, score } = submission.questions.reduce(
@@ -115,12 +121,10 @@ export class TakerService {
 
   async recordSubmission(
     quiz: Quiz,
-    submission: any,
-    markedSubmission: any,
-    req: any
+    submission: SubmissionRequestDto,
+    markedSubmission: SubmissionResponseDto,
+    @Req() req: Request
   ): Promise<Submission> {
-    console.log(quiz.id)
-
     return Submission.create({
       quizId: quiz.id,
       name: submission.name,
