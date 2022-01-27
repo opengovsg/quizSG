@@ -1,4 +1,12 @@
-import { Box, RadioGroup, Text } from '@chakra-ui/react'
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import {
+  Box,
+  Flex,
+  Icon,
+  RadioGroup,
+  Text,
+  VisuallyHidden,
+} from '@chakra-ui/react'
 import { Radio } from '@opengovsg/design-system-react'
 
 import { Option } from '~services/QuizApi/taker'
@@ -24,16 +32,29 @@ const MarkedMCQAnswerGroup = ({
       >
         Your Answer
       </Text>
-      <RadioGroup value={submittedAnswer}>
-        {options.map((option, index) => (
-          <Radio
-            value={index.toString()}
-            colorScheme={
-              submittedAnswer === correctAnswer ? 'success' : 'danger'
-            }
-          >
-            {option.text}
-          </Radio>
+      <RadioGroup value={submittedAnswer.toString()} mt={4}>
+        {options.map((qn: any, index: number) => (
+          <Flex alignItems="center" py={1}>
+            {submittedAnswer === correctAnswer ? (
+              <CheckIcon
+                mr={4}
+                color={index === correctAnswer ? 'success.500' : 'white'}
+              />
+            ) : (
+              <CloseIcon
+                mr={4}
+                color={index !== correctAnswer ? 'danger.500' : 'white'}
+              />
+            )}
+            <Radio
+              value={qn.id.toString()}
+              colorScheme={
+                submittedAnswer === correctAnswer ? 'success' : 'danger'
+              }
+            >
+              {qn.text} (Your )
+            </Radio>
+          </Flex>
         ))}
       </RadioGroup>
     </Box>
