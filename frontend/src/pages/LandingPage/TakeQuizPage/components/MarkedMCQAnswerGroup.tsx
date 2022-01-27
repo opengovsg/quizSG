@@ -25,14 +25,14 @@ const MarkedMCQAnswerGroup = ({
         Your Answer
       </Text>
       <RadioGroup value={submittedAnswer}>
-        {options.map((qn: any, index: number) => (
+        {options.map((option, index) => (
           <Radio
             value={index.toString()}
             colorScheme={
               submittedAnswer === correctAnswer ? 'success' : 'danger'
             }
           >
-            {qn.text}
+            {option.text}
           </Radio>
         ))}
       </RadioGroup>

@@ -43,6 +43,8 @@ const TakeQuizPageContainer = (): JSX.Element => {
   )
     return <Flex>Cannot fetch quiz</Flex>
 
+  if (submitQuizError) return <Flex>Error on quiz submission</Flex>
+
   const onOptionSelected = (optionId: string | string[]) => {
     if (Array.isArray(optionId)) {
       setOptionSelected(optionId)
