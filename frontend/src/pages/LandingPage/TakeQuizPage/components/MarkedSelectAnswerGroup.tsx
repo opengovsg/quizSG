@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Box, CheckboxGroup, Text } from '@chakra-ui/react'
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import { Box, CheckboxGroup, Flex, Text } from '@chakra-ui/react'
 import { Checkbox } from '@opengovsg/design-system-react'
 
 const MarkedSelectAnswerGroup = (props: any): JSX.Element => {
@@ -22,14 +23,31 @@ const MarkedSelectAnswerGroup = (props: any): JSX.Element => {
         </Text>
         <CheckboxGroup value={submittedAnswer}>
           {props.question.options.map((qn: any, index: number) => (
-            <Checkbox
-              value={index.toString()}
-              colorScheme={
-                submittedAnswer === correctAnswer ? 'success' : 'danger'
-              }
-            >
-              {qn.text}
-            </Checkbox>
+            <Flex>
+              {submittedAnswer.some(correctAnswer) ? (
+                <CheckIcon
+                  mr={4}
+                  color={
+                    qn.id.toString() === correctAnswer ? 'success.500' : 'white'
+                  }
+                />
+              ) : (
+                <CloseIcon
+                  mr={4}
+                  color={
+                    qn.id.toString() !== correctAnswer ? 'danger.500' : 'white'
+                  }
+                />
+              )}
+              <Checkbox
+                value={index.toString()}
+                colorScheme={
+                  qn.id.toString() === correctAnswer ? 'success' : 'danger'
+                }
+              >
+                {qn.text}
+              </Checkbox>
+            </Flex>
           ))}
         </CheckboxGroup>
       </Box>
@@ -38,9 +56,17 @@ const MarkedSelectAnswerGroup = (props: any): JSX.Element => {
         <Text color="success.600">Correct Answer</Text>
         <CheckboxGroup value={correctAnswer}>
           {props.question.options.map((qn: any, index: number) => (
-            <Checkbox value={index.toString()} colorScheme="success">
-              {qn.text}
-            </Checkbox>
+            <Flex>
+              <CheckIcon
+                mr={4}
+                color={
+                  qn.id.toString() === correctAnswer ? 'success.500' : 'white'
+                }
+              />
+              <Checkbox value={index.toString()} colorScheme="success">
+                {qn.text}
+              </Checkbox>
+            </Flex>
           ))}
         </CheckboxGroup>
       </Box>
