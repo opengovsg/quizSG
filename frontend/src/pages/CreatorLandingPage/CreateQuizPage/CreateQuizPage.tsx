@@ -1,14 +1,32 @@
-import { Flex, Heading, HStack } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { GridItem, SimpleGrid, VStack } from '@chakra-ui/react'
+
+import Header from '~components/Header'
+
+import QuizConfigurationForm from './QuizConfigurationForm'
+
+const DEFAULT_QUIZ_CONFIG = {
+  quizName: '',
+  organisationName: '',
+  passingScore: '',
+  quizDescription: '',
+}
 
 const CreateQuizPage = (): JSX.Element => {
+  const [quizConfig, setQuizConfig] = useState(DEFAULT_QUIZ_CONFIG)
+  const [questions, setQuestions] = useState([])
   return (
-    <Flex flexDir="column" alignItems="center">
-      <Heading as="h1">New Quiz</Heading>
-      <HStack>
-        <div>New Question</div>
-        <div>Create Quiz</div>
-      </HStack>
-    </Flex>
+    <VStack bg="primary.100" alignItems="stretch">
+      <Header>New Quiz</Header>
+      <SimpleGrid columns={12} spacing={10}>
+        <GridItem bg="orange" colSpan={8}>
+          New question
+        </GridItem>
+        <GridItem colSpan={4}>
+          <QuizConfigurationForm quizConfig={quizConfig} />
+        </GridItem>
+      </SimpleGrid>
+    </VStack>
   )
 }
 
