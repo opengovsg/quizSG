@@ -40,7 +40,7 @@ const TakeQuizPage = ({
   submission,
 }: Props): JSX.Element => {
   return (
-    <Box bg="primary.100">
+    <Box bg="primary.100" minH="100vh">
       <Header
         quizName={quiz.name}
         numQuestions={quiz.questions.length}
