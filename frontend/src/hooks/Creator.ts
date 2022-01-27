@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { useMutation, useQuery } from 'react-query'
 
-import QuizApi, { QuizCreationDto } from '~services/QuizApi'
+import QuizApi, { QuizCreationDto } from '~services/QuizApi/creator'
 
 const ALL_QUIZZES_QUERY_KEY = ['all_quizzes']
 
