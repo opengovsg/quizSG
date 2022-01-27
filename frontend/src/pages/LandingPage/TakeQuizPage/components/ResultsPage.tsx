@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react'
+import { Button, Container } from '@chakra-ui/react'
 
 import {
   QuestionInGetQuizDto,
@@ -13,12 +13,14 @@ type Props = {
   submissionResult: SubmitQuizResultResponseDto
   submissionAnswers: SubmitQuizAnswerResponseDto[]
   questions: QuestionInGetQuizDto[]
+  onViewCertificateButtonClick: () => void
 }
 
 const ResultsPage = ({
   submissionResult,
   submissionAnswers,
   questions,
+  onViewCertificateButtonClick,
 }: Props): JSX.Element => {
   return (
     <Container maxW="container.xl" py={20}>
@@ -42,6 +44,13 @@ const ResultsPage = ({
           )
         )
       })}
+      {submissionResult.pass && (
+        <Container alignItems="center">
+          <Button variant="solid" onClick={onViewCertificateButtonClick}>
+            Go to Quiz Certificate →
+          </Button>
+        </Container>
+      )}
     </Container>
   )
 }

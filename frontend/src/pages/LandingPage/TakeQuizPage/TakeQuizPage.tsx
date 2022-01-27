@@ -5,6 +5,7 @@ import { GetQuizDto, SubmitQuizResponseDto } from '~services/QuizApi/taker'
 import Header from './components/Header'
 import LandingPage from './components/LandingPage'
 import QuestionPage from './components/QuestionPage'
+import QuizCertificatePage from './components/QuizCertificatePage'
 import ResultsPage from './components/ResultsPage'
 import { Phases } from './TakeQuizPageContainer'
 
@@ -22,6 +23,7 @@ type Props = {
   onNextButtonClick: () => void
   onQuizSubmit: () => void
   submission: SubmitQuizResponseDto | null
+  onViewCertificateButtonClick: () => void
 }
 
 const TakeQuizPage = ({
@@ -38,6 +40,7 @@ const TakeQuizPage = ({
   onNextButtonClick,
   onQuizSubmit,
   submission,
+  onViewCertificateButtonClick,
 }: Props): JSX.Element => {
   return (
     <Box bg="primary.100" minH="100vh">
@@ -76,6 +79,14 @@ const TakeQuizPage = ({
           submissionResult={submission.result}
           submissionAnswers={submission.answers}
           questions={quiz.questions}
+          onViewCertificateButtonClick={onViewCertificateButtonClick}
+        />
+      )}
+      {phase === Phases.CERTIFICATE && submission && (
+        <QuizCertificatePage
+          name={takerName}
+          quizName={quiz.name}
+          organisation={quiz.organisation}
         />
       )}
     </Box>

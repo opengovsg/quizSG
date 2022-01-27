@@ -15,6 +15,7 @@ export enum Phases {
   BEFORE_TAKING,
   TAKING,
   SUBMITTED,
+  CERTIFICATE,
 }
 
 const TakeQuizPageContainer = (): JSX.Element => {
@@ -106,6 +107,7 @@ const TakeQuizPageContainer = (): JSX.Element => {
       onNextButtonClick={onNextButtonClick}
       onQuizSubmit={onQuizSubmit}
       submission={submission}
+      onViewCertificateButtonClick={() => setPhase(Phases.CERTIFICATE)}
     />
   )
 }
