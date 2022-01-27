@@ -26,7 +26,8 @@ const MarkedQuestion = ({ index, answer, question }: Props): JSX.Element => {
       <MarkedMCQAnswerGroup
         options={question.options}
         submittedAnswer={answer.submittedAnswer[0]}
-        correctAnswer={answer.submittedAnswer[0]}
+        correctAnswer={answer.correctAnswer[0]}
+        isCorrect={answer.isCorrect}
       />
       <Box bg="white" mt={8} p={10} borderRadius="lg" boxShadow="sm">
         <Text textStyle="body-1">{answer.explanation}</Text>
