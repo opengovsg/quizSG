@@ -3,7 +3,7 @@ import { Box, RadioGroup } from '@chakra-ui/react'
 import { Radio } from '@opengovsg/design-system-react'
 
 const MCQAnswerGroup = (): JSX.Element => {
-  const [value, setValue] = React.useState('1')
+  const [value, setValue] = useState('1')
 
   const qnArr = ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4']
 
