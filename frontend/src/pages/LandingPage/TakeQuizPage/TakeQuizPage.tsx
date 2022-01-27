@@ -13,6 +13,7 @@ import {
 import { Button } from '@opengovsg/design-system-react'
 
 import QuestionPage from './components/QuestionPage'
+import ResultsPage from './components/ResultsPage'
 
 const TakeQuizPage = (): JSX.Element => {
   const { quizId } = useParams<{ quizId: string }>()
@@ -39,10 +40,11 @@ const TakeQuizPage = (): JSX.Element => {
 
   return (
     <>
-      <Box bg="primary.100" h="100vh">
+      <Box bg="primary.100">
         <Header />
         <LandingPage name={name} setName={setName} />
         <QuestionPage />
+        <ResultsPage />
       </Box>
     </>
   )
