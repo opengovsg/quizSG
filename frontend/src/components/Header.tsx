@@ -5,7 +5,7 @@ import { Box, Text } from '@chakra-ui/react'
 const Header = ({
   children,
   subhead,
-  textStyle = 'display-1',
+  textStyle = 'h1',
   subheadTextStyle = 'subhead-1',
 }: {
   children: string
