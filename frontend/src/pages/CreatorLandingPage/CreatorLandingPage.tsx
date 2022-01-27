@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   Flex,
-  Heading,
   Table,
   Tbody,
   Td,
@@ -32,7 +31,7 @@ const TABLE_CONFIG = [
   {
     display: 'Quiz Name',
     key: 'name',
-    fn: (name: any) => name || '-',
+    fn: (name: string) => name || '-',
   },
   {
     display: 'Created At',

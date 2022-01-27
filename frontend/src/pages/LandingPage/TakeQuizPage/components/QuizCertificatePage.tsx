@@ -1,11 +1,16 @@
-import React from 'react'
 import { Box, Container, Text } from '@chakra-ui/react'
 
-const QuizCertificatePage = (): JSX.Element => {
-  const name = 'Herman'
-  const quizName = 'National Heritage Quiz'
-  const organisationName = 'National Heritage Board'
+type Props = {
+  name: string
+  quizName: string
+  organisation: string
+}
 
+const QuizCertificatePage = ({
+  name,
+  quizName,
+  organisation,
+}: Props): JSX.Element => {
   return (
     <Container maxW="container.xl">
       <Box
@@ -22,9 +27,9 @@ const QuizCertificatePage = (): JSX.Element => {
           Congratulations, {name}!
         </Text>
         <Text textStyle="h1" color="primary.500" mt={24} mx={24}>
-          You have successfully completed the {quizName} set by{' '}
-          {organisationName} on {new Date().toDateString()}. Go forth and spread
-          the knowledge!!
+          You have successfully completed <b>{quizName}</b> set by{' '}
+          <b>{organisation}</b> on {new Date().toDateString()}. Go forth and
+          spread the knowledge!!
         </Text>
       </Box>
     </Container>

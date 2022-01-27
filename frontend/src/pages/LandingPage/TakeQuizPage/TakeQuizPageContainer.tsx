@@ -15,6 +15,7 @@ export enum Phases {
   BEFORE_TAKING,
   TAKING,
   SUBMITTED,
+  CERTIFICATE,
 }
 
 const TakeQuizPageContainer = (): JSX.Element => {
@@ -41,6 +42,8 @@ const TakeQuizPageContainer = (): JSX.Element => {
     !quiz.questions[0].options
   )
     return <Flex>Cannot fetch quiz</Flex>
+
+  if (submitQuizError) return <Flex>Error on quiz submission</Flex>
 
   const onOptionSelected = (optionId: string | string[]) => {
     if (Array.isArray(optionId)) {
@@ -106,6 +109,7 @@ const TakeQuizPageContainer = (): JSX.Element => {
       onNextButtonClick={onNextButtonClick}
       onQuizSubmit={onQuizSubmit}
       submission={submission}
+      onViewCertificateButtonClick={() => setPhase(Phases.CERTIFICATE)}
     />
   )
 }
