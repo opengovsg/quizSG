@@ -9,15 +9,19 @@ import {
   Text,
 } from '@chakra-ui/react'
 
+type Props = {
+  quizDescription: string
+  takerName: string
+  setTakerName: (name: string) => void
+  onTakeQuizSubmit: () => void
+}
+
 const LandingPage = ({
   quizDescription,
   takerName,
   setTakerName,
-}: {
-  quizDescription: string
-  takerName: string
-  setTakerName: (name: string) => void
-}): JSX.Element => (
+  onTakeQuizSubmit,
+}: Props): JSX.Element => (
   <Container maxW="container.xl">
     <Grid templateColumns="repeat(2, 1fr)" gap={6} alignItems="center" mt={20}>
       <GridItem>
@@ -30,19 +34,26 @@ const LandingPage = ({
             Your name
           </Text>
           <Flex mt={2}>
-            <Input
-              required
-              value={takerName}
-              placeholder="E.g. Tim"
-              type="text"
-              onChange={(e) => {
-                setTakerName(e.target.value)
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                onTakeQuizSubmit()
               }}
-              mr={2}
-            />
-            <Button colorScheme="primary" type="submit">
-              Take Quiz →
-            </Button>
+            >
+              <Input
+                required
+                value={takerName}
+                placeholder="E.g. Tim"
+                type="text"
+                onChange={(e) => {
+                  setTakerName(e.target.value)
+                }}
+                mr={2}
+              />
+              <Button colorScheme="primary" type="submit">
+                Take Quiz →
+              </Button>
+            </form>
           </Flex>
         </Box>
       </GridItem>

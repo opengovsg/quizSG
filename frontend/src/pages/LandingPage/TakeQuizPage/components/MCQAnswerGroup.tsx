@@ -1,17 +1,31 @@
-import React, { useState } from 'react'
 import { Box, RadioGroup } from '@chakra-ui/react'
 import { Radio } from '@opengovsg/design-system-react'
 
-const MCQAnswerGroup = (): JSX.Element => {
-  const [value, setValue] = useState('1')
+import { Option } from '~services/QuizApi/taker'
 
-  const qnArr = ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4']
+type Props = {
+  options: Option[]
+  optionSelected: string[]
+  onOptionSelected: (optionId: string | string[]) => void
+}
 
+const MCQAnswerGroup = ({
+  options,
+  optionSelected,
+  onOptionSelected,
+}: Props): JSX.Element => {
   return (
     <Box bg="white" borderRadius="lg" boxShadow="sm" p="6">
-      <RadioGroup onChange={setValue} value={value}>
-        {qnArr.map((qn, index) => (
-          <Radio value={index.toString()}>{qn}</Radio>
+      <RadioGroup
+        onChange={(e) => {
+          onOptionSelected(e)
+        }}
+        value={optionSelected[0]}
+      >
+        {options.map((option) => (
+          <Radio value={option.id.toString()} key={`option-${option.id}`}>
+            {option.text}
+          </Radio>
         ))}
       </RadioGroup>
     </Box>

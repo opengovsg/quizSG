@@ -1,25 +1,29 @@
 import React from 'react'
 import { Box, Text } from '@chakra-ui/react'
 
-const QuestionInfo = (): JSX.Element => {
-  const question = {
-    index: 8,
-    title: 'What is the square root of 15625 times 32 minus 4',
-    pointValue: 3,
-    description:
-      'The Nationanl heritage of singpaore Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non lacinia leo, at laoreet arcu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed gravida sem a augue accumsan dictum. Vivamus pellentesque odio eget nibh vehicula consectetur.',
-  }
+type Props = {
+  index: number
+  title: string
+  pointValue: number
+  description: string
+}
 
+const QuestionInfo = ({
+  index,
+  title,
+  pointValue,
+  description,
+}: Props): JSX.Element => {
   return (
     <Box color="primary.900" my={8}>
       <Text textStyle="h2">
-        Question {question.index}. {question.title}
+        Question {index}: {title}
       </Text>
       <Text textStyle="subhead-1" mt={4}>
-        Points: {question.pointValue}
+        Points: {pointValue}
       </Text>
       <Text textStyle="body" mt={4}>
-        {question.description}
+        {description}
       </Text>
     </Box>
   )

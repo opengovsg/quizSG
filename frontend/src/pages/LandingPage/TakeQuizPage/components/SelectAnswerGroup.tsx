@@ -1,22 +1,30 @@
-import React, { useState } from 'react'
 import { Box, CheckboxGroup } from '@chakra-ui/react'
 import { Checkbox } from '@opengovsg/design-system-react'
 
-const SelectAnswerGroup = (): JSX.Element => {
-  const [selectedAnswers, setSelectedAnswers] = useState([])
+import { Option } from '~services/QuizApi/taker'
 
-  const selectAnswers = (e: any) => {
-    console.log('checkbox', e)
-    setSelectedAnswers(e)
-  }
+type Props = {
+  options: Option[]
+  optionSelected: string[]
+  onOptionSelected: (optionId: string | string[]) => void
+}
 
+const SelectAnswerGroup = ({
+  options,
+  optionSelected,
+  onOptionSelected,
+}: Props): JSX.Element => {
   return (
     <Box bg="white" borderRadius="lg" boxShadow="sm" p="6">
-      <CheckboxGroup onChange={selectAnswers}>
-        <Checkbox value={'1'}>Option 1</Checkbox>
-        <Checkbox value={'2'}>Option 2</Checkbox>
-        <Checkbox value={'3'}>Option 3</Checkbox>
-        <Checkbox value={'4'}>Option 4</Checkbox>
+      <CheckboxGroup
+        onChange={(e) => onOptionSelected(e as string[])}
+        value={[...optionSelected]}
+      >
+        {options.map((option) => (
+          <Checkbox value={option.id.toString()} key={`option-${option.id}`}>
+            {option.text}
+          </Checkbox>
+        ))}
       </CheckboxGroup>
     </Box>
   )

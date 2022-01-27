@@ -6,6 +6,7 @@ export type GetQuizDto = {
 }
 
 export type QuestionInGetQuizDto = {
+  id: number
   text: string
   details: string
   explanation: string
@@ -16,7 +17,18 @@ export type QuestionInGetQuizDto = {
 }
 
 export type QuestionType = 'MCQ-1' | 'MCQ-M' | 'T/F'
+
 export type Option = {
   id: number
   text: string
+}
+
+export type Answer = string[]
+
+export type SubmitQuizDto = {
+  name: string
+  questions: {
+    id: number
+    answer: number[]
+  }[]
 }
