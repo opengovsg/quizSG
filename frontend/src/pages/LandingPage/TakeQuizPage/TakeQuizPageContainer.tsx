@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Flex } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 
 import { useFetchQuiz, useSubmitQuiz } from '~hooks/Taker'
 import {
@@ -20,8 +20,8 @@ export enum Phases {
 
 const TakeQuizPageContainer = (): JSX.Element => {
   const { quizId } = useParams<{ quizId: string }>()
-  const { quiz, fetchQuizError } = useFetchQuiz(quizId)
-  const { submitQuiz, submitQuizError } = useSubmitQuiz()
+  const { quiz, isFetchingQuiz, fetchQuizError } = useFetchQuiz(quizId)
+  const { submitQuiz, isSubmitQuizLoading, submitQuizError } = useSubmitQuiz()
   const [takerName, setTakerName] = useState<string>('')
   const [phase, setPhase] = useState<Phases>(Phases.BEFORE_TAKING)
   const [questionIdx, setQuestionIdx] = useState<number>(0)
@@ -33,7 +33,15 @@ const TakeQuizPageContainer = (): JSX.Element => {
     null,
   )
 
-  // TODO: to render toast on fetchQuizError using useEffect()
+  // TODO: to handle using useEffect() => loading: temp screen, error: toast
+  const EmptyScreen = (): JSX.Element => (
+    <Box bg="primary.100" minH="100vh">
+      <Box height={200} background="teal.600" />
+    </Box>
+  )
+
+  if (isFetchingQuiz) return <EmptyScreen />
+
   if (
     fetchQuizError ||
     !quiz ||
@@ -42,6 +50,8 @@ const TakeQuizPageContainer = (): JSX.Element => {
     !quiz.questions[0].options
   )
     return <Flex>Cannot fetch quiz</Flex>
+
+  if (isSubmitQuizLoading) return <EmptyScreen />
 
   if (submitQuizError) return <Flex>Error on quiz submission</Flex>
 
