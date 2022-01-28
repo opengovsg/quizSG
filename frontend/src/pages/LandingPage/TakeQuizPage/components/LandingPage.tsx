@@ -5,9 +5,13 @@ import {
   Flex,
   Grid,
   GridItem,
+  Image,
   Input,
   Text,
 } from '@chakra-ui/react'
+
+// TODO: remove hardcoded cbd image
+import cbd from '../../images/img-cbd.png'
 
 type Props = {
   quizDescription: string
@@ -25,7 +29,9 @@ const LandingPage = ({
   <Container maxW="container.xl">
     <Grid templateColumns="repeat(2, 1fr)" gap={6} alignItems="center" mt={20}>
       <GridItem>
-        <Box h="400px" w="100%" bg="gray.400" flex={1} marginRight={20} />
+        {/* <Box h="400px" w="100%" bg="gray.400" flex={1} marginRight={20} /> */}
+        {/* // TODO: remove hardcoded cbd image */}
+        <Image src={cbd} alt="quiz-image" borderRadius="lg" />
       </GridItem>
       <GridItem>
         <Text>{quizDescription}</Text>
