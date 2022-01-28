@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { DeleteIcon } from '@chakra-ui/icons'
-import { Box, Flex, RadioGroup, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Checkbox,
+  CheckboxGroup,
+  Flex,
+  RadioGroup,
+  Text,
+} from '@chakra-ui/react'
 import { Button, Input, Radio, Textarea } from '@opengovsg/design-system-react'
 import _ from 'lodash'
 
@@ -105,82 +112,172 @@ const Question = ({
             }}
           />
         </Box>
-        {/* Radio Answer inputs */}
+        {/* Radio Answer inputs by question type */}
         <Box mt={2}>
-          <Text textStyle="subhead-1" py={2}>
-            Answers (select the correct answer)
-          </Text>
-          <Box>
-            <RadioGroup
-              onChange={(val) => {
-                console.log('radio val', val)
-                setQuestions((prevQuestions: QuestionBase[]) => {
-                  const newOptions = _.map(
-                    prevQuestions[parseInt(index)].options,
-                    (option, index) => {
-                      return {
-                        ...option,
-                        isTrue: index === parseInt(val),
-                      }
-                    },
-                  )
-                  prevQuestions[parseInt(index)].options = newOptions
-                  return [...prevQuestions]
-                })
-              }}
-              value={_.findIndex(question.options, { isTrue: true }).toString()}
-            >
-              {question.options.map((el, optionIndex) => {
-                const optionValue = optionIndex.toString()
-                return (
-                  <Box my={2} key={optionValue}>
-                    <Flex alignItems="center">
-                      <Radio value={optionValue}>
-                        Answer {optionIndex + 1}
-                      </Radio>
-                      <Button
-                        color="primary.700"
-                        variant="reverse"
-                        bg="primary.100"
-                        border="none"
-                        _hover={{
-                          background: 'primary.100',
-                          color: 'danger.500',
-                        }}
-                        onClick={() => {
-                          setQuestions((prevQuestions: QuestionBase[]) => {
-                            prevQuestions[parseInt(index)].options.splice(
-                              optionIndex,
-                              1,
-                            )
-                            return [...prevQuestions]
-                          })
-                        }}
-                      >
-                        <DeleteIcon />
-                      </Button>
-                    </Flex>
-                    <Input
-                      placeholder="Type your answer"
-                      value={el.text}
-                      onChange={(val) => {
-                        setQuestions((prevQuestions: QuestionBase[]) => {
-                          prevQuestions[parseInt(index)].options[optionIndex] =
-                            {
-                              ...prevQuestions[parseInt(index)].options[
+          {question.type === 'MCQ-1' ? (
+            <>
+              <Text textStyle="subhead-1" py={2}>
+                Answers (select the correct answer)
+              </Text>
+              <Box>
+                <RadioGroup
+                  onChange={(val) => {
+                    console.log('radio val', val)
+                    setQuestions((prevQuestions: QuestionBase[]) => {
+                      const newOptions = _.map(
+                        prevQuestions[parseInt(index)].options,
+                        (option, index) => {
+                          return {
+                            ...option,
+                            isTrue: index === parseInt(val),
+                          }
+                        },
+                      )
+                      prevQuestions[parseInt(index)].options = newOptions
+                      return [...prevQuestions]
+                    })
+                  }}
+                  value={_.findIndex(question.options, {
+                    isTrue: true,
+                  }).toString()}
+                >
+                  {question.options.map((el, optionIndex) => {
+                    const optionValue = optionIndex.toString()
+                    return (
+                      <Box my={2} key={optionValue}>
+                        <Flex alignItems="center">
+                          <Radio value={optionValue}>
+                            Answer {optionIndex + 1}
+                          </Radio>
+                          <Button
+                            color="primary.700"
+                            variant="reverse"
+                            bg="primary.100"
+                            border="none"
+                            _hover={{
+                              background: 'primary.100',
+                              color: 'danger.500',
+                            }}
+                            onClick={() => {
+                              setQuestions((prevQuestions: QuestionBase[]) => {
+                                prevQuestions[parseInt(index)].options.splice(
+                                  optionIndex,
+                                  1,
+                                )
+                                return [...prevQuestions]
+                              })
+                            }}
+                          >
+                            <DeleteIcon />
+                          </Button>
+                        </Flex>
+                        <Input
+                          placeholder="Type your answer"
+                          value={el.text}
+                          onChange={(val) => {
+                            setQuestions((prevQuestions: QuestionBase[]) => {
+                              prevQuestions[parseInt(index)].options[
                                 optionIndex
-                              ],
-                              text: val.target.value,
-                            }
-                          return [...prevQuestions]
-                        })
-                      }}
-                    />
-                  </Box>
-                )
-              })}
-            </RadioGroup>
-          </Box>
+                              ] = {
+                                ...prevQuestions[parseInt(index)].options[
+                                  optionIndex
+                                ],
+                                text: val.target.value,
+                              }
+                              return [...prevQuestions]
+                            })
+                          }}
+                        />
+                      </Box>
+                    )
+                  })}
+                </RadioGroup>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Text textStyle="subhead-1" py={2}>
+                Answers (select the correct answer)
+              </Text>
+              <Box>
+                <CheckboxGroup
+                  onChange={(values: string[]) => {
+                    // console.log('checkbox val', val)
+                    setQuestions((prevQuestions: QuestionBase[]) => {
+                      const newOptions = _.map(
+                        prevQuestions[parseInt(index)].options,
+                        (option, index) => {
+                          return {
+                            ...option,
+                            isTrue: _.includes(values, index.toString()),
+                          }
+                        },
+                      )
+                      prevQuestions[parseInt(index)].options = newOptions
+                      return [...prevQuestions]
+                    })
+                  }}
+                  value={_(question.options)
+                    .map((option, index) =>
+                      option.isTrue ? index.toString() : undefined,
+                    )
+                    .compact()
+                    .value()}
+                >
+                  {question.options.map((el, optionIndex) => {
+                    const optionValue = optionIndex.toString()
+                    return (
+                      <Box my={2} key={optionValue}>
+                        <Flex alignItems="center">
+                          <Checkbox value={optionValue}>
+                            Answer {optionIndex + 1}
+                          </Checkbox>
+                          <Button
+                            color="primary.700"
+                            variant="reverse"
+                            bg="primary.100"
+                            border="none"
+                            _hover={{
+                              background: 'primary.100',
+                              color: 'danger.500',
+                            }}
+                            onClick={() => {
+                              setQuestions((prevQuestions: QuestionBase[]) => {
+                                prevQuestions[parseInt(index)].options.splice(
+                                  optionIndex,
+                                  1,
+                                )
+                                return [...prevQuestions]
+                              })
+                            }}
+                          >
+                            <DeleteIcon />
+                          </Button>
+                        </Flex>
+                        <Input
+                          placeholder="Please specify"
+                          value={el.text}
+                          onChange={(val) => {
+                            setQuestions((prevQuestions: QuestionBase[]) => {
+                              prevQuestions[parseInt(index)].options[
+                                optionIndex
+                              ] = {
+                                ...prevQuestions[parseInt(index)].options[
+                                  optionIndex
+                                ],
+                                text: val.target.value,
+                              }
+                              return [...prevQuestions]
+                            })
+                          }}
+                        />
+                      </Box>
+                    )
+                  })}
+                </CheckboxGroup>
+              </Box>
+            </>
+          )}
         </Box>
         <Button
           isFullWidth
