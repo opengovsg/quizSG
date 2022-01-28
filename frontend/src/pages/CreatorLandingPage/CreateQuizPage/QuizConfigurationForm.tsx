@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
@@ -8,6 +9,13 @@ import {
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 
+const DEFAULT_QUIZ_CONFIG = {
+  quizName: '',
+  organisationName: '',
+  passingScore: '',
+  quizDescription: '',
+}
+
 function validateName(value: string) {
   let error
   if (!value) {
@@ -17,23 +25,18 @@ function validateName(value: string) {
 }
 
 const QuizConfigurationForm = ({
-  quizConfig,
+  onClickCreate,
 }: {
-  quizConfig: {
-    quizName: string
-    organisationName: string
-    passingScore: string
-    quizDescription: string
-  }
+  onClickCreate: Function
 }): JSX.Element => {
   return (
     <Formik
-      initialValues={quizConfig}
+      initialValues={DEFAULT_QUIZ_CONFIG}
       onSubmit={(values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2))
-          actions.setSubmitting(false)
-        }, 1000)
+        onClickCreate({
+          ...values,
+          onSuccess: () => actions.setSubmitting(false),
+        })
       }}
     >
       {(props) => (

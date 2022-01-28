@@ -1,22 +1,19 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Box, Container, GridItem, SimpleGrid, VStack } from '@chakra-ui/react'
 import _ from 'lodash'
 
+import { CREATOR_ROUTE } from '~constants/routes'
+import { useCreateQuiz } from '~hooks/Creator'
 import Header from '~components/Header'
 import NewQuestion from '~components/NewQuestion'
-import QuestionField from '~components/QuestionField'
 
+// import QuestionField from '~components/QuestionField'
 import Question from './Question'
 import QuizConfigurationForm from './QuizConfigurationForm'
-
-const DEFAULT_QUIZ_CONFIG = {
-  quizName: '',
-  organisationName: '',
-  passingScore: '',
-  quizDescription: '',
-}
 
 const COMMON_FIELDS = {
   text: '',
@@ -62,8 +59,9 @@ const DEFAULT_MCQ_M = {
 // When deleting the latest to the earliest it seems to work fine, but the reverse
 // seems to bug out.
 const CreateQuizPage = (): JSX.Element => {
-  const [quizConfig, setQuizConfig] = useState(DEFAULT_QUIZ_CONFIG)
+  const history = useHistory()
   const [questions, setQuestions] = useState<any>([])
+  const { createQuiz } = useCreateQuiz()
 
   const onClickNewQuestion = (questionType: string) => {
     if (questionType === DEFAULT_MCQ_M.type) {
@@ -86,6 +84,36 @@ const CreateQuizPage = (): JSX.Element => {
       prevQuestions.splice(parseInt(index), 1)
       return [...prevQuestions]
     })
+  }
+
+  const onClickCreate = ({
+    quizName,
+    organisationName,
+    passingScore,
+    quizDescription,
+    onSuccess,
+  }: {
+    quizName: string
+    organisationName: string
+    passingScore: string
+    quizDescription: string
+    onSuccess: any
+  }) => {
+    createQuiz(
+      {
+        name: quizName,
+        description: quizDescription,
+        passingPercent: parseFloat(passingScore) / 100,
+        organisation: organisationName,
+        questions,
+      },
+      {
+        onSuccess: () => {
+          onSuccess()
+          history.push(CREATOR_ROUTE)
+        },
+      },
+    )
   }
 
   console.log('questions', questions)
@@ -112,7 +140,7 @@ const CreateQuizPage = (): JSX.Element => {
           </GridItem>
           <GridItem colSpan={4}>
             <Box bg="white" p={6} borderRadius="lg" boxShadow="sm">
-              <QuizConfigurationForm quizConfig={quizConfig} />
+              <QuizConfigurationForm onClickCreate={onClickCreate} />
             </Box>
           </GridItem>
         </SimpleGrid>
