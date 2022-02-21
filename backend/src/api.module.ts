@@ -1,5 +1,6 @@
+import { readFileSync } from 'fs'
 import { Module } from '@nestjs/common'
-import { SequelizeModule } from '@nestjs/sequelize'
+import { SequelizeModule, SequelizeModuleOptions } from '@nestjs/sequelize'
 import { ConfigModule } from 'config/config.module'
 import { TerminusModule } from '@nestjs/terminus'
 import { HealthModule } from './health/health.module'
@@ -28,16 +29,54 @@ const apiModules = [
     ...apiModules,
     SequelizeModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        dialect: 'postgres',
-        host: config.get('db.host'),
-        port: config.get('db.port'),
-        username: config.get('db.username'),
-        password: config.get('db.password'),
-        database: config.get('db.database'),
-        autoLoadModels: true, // TO-DO: remove in production
-        synchronize: true, // TO-DO: remove in production
-      }),
+      useFactory: (config: ConfigService) => {
+        const sequelizeOptions: SequelizeModuleOptions = {
+          dialect: 'postgres',
+          autoLoadModels: true,
+          synchronize: true,
+        }
+
+        if (!config.get('db.url')) {
+          Object.assign(sequelizeOptions, {
+            host: config.get('db.host'),
+            port: config.get('db.port'),
+            username: config.get('db.username'),
+            password: config.get('db.password'),
+            database: config.get('db.database'),
+          })
+        } else {
+          const url = new URL(config.get('db.url'))
+
+          Object.assign(sequelizeOptions, {
+            host: url.hostname,
+            port: parseInt(url.port, 10) || undefined,
+            username: url.username,
+            password: url.password,
+            database: url.pathname.split('/')[1],
+          })
+        }
+
+        if (config.get('environment') === 'production') {
+          console.log(
+            `Working in ${config.get('environment')} - activating ssl`
+          )
+          Object.assign(sequelizeOptions, {
+            synchronize: false,
+            ssl: true,
+            dialectOptions: {
+              ssl: {
+                require: true,
+                rejectUnauthorized: true,
+                ca: readFileSync(
+                  'certificates/ca-certificate-production.cer'
+                ).toString(),
+              },
+            },
+          })
+        }
+
+        return sequelizeOptions
+      },
     }),
     RouterModule.register([
       {
