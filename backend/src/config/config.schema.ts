@@ -12,6 +12,7 @@ export interface ConfigSchema {
     numValidFutureWindows: number
   }
   db: {
+    url: string
     host: string
     username: string
     password: string
@@ -111,6 +112,12 @@ export const schema: Schema<ConfigSchema> = {
     },
   },
   db: {
+    url: {
+      doc: 'Database URL',
+      env: 'DATABASE_URL',
+      default: '',
+      format: String,
+    },
     host: {
       doc: 'Database hostname',
       env: 'DB_HOST',
@@ -121,7 +128,7 @@ export const schema: Schema<ConfigSchema> = {
       doc: 'Database username',
       env: 'DB_USERNAME',
       default: '',
-      format: 'required-string',
+      format: String,
     },
     password: {
       doc: 'Database password',

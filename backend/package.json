@@ -17,7 +17,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node build",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage && sed -i.bak 's/SF:src/SF:backend\\/src/g' coverage/lcov.info",
