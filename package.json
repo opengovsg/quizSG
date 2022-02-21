@@ -1,8 +1,12 @@
+
 {
   "name": "@opengovsg/quizSG",
   "version": "1.0.0",
   "description": "A publicly available quiz engine",
   "main": "build/backend/index.js",
+  "engines": {
+    "node": "16.14.0"
+  },
   "scripts": {
     "on-backend": "npm run --prefix backend",
     "on-frontend": "npm run --prefix frontend",
