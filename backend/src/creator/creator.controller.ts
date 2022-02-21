@@ -70,7 +70,7 @@ export class CreatorController {
             } as CreateOptionDB
           }
         )
-        acc = [...acc, ...optionsAppendedWithQuestionid]
+        acc.push(...optionsAppendedWithQuestionid)
         return acc
       },
       [] as CreateOptionDB[]
