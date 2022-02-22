@@ -29,7 +29,7 @@ export class TakerController {
     @Res() res: Response,
     @Param() param: IsNumberStringValidator
   ): Promise<void> {
-    const quiz = await this.quizService.getQuiz(param.id)
+    const quiz = await this.quizService.getQuizWithQuestionsAndOptions(param.id)
 
     // TODO: subset, randomization on questions and options
     // TODO: store quiz to user session (to prevent foul play on submission!)
@@ -47,7 +47,7 @@ export class TakerController {
     @Body() submission: SubmissionRequestDto,
     @Param() param: IsNumberStringValidator
   ): Promise<void> {
-    const quiz = await this.quizService.getQuiz(param.id)
+    const quiz = await this.quizService.getQuizWithQuestionsAndOptions(param.id)
 
     if (!quiz) throw new NotFoundException()
     try {

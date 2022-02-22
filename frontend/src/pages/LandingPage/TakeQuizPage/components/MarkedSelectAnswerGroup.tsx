@@ -24,8 +24,12 @@ const MarkedSelectAnswerGroup = ({
           Your Answer
         </Text>
         <CheckboxGroup value={submittedAnswer}>
-          {options.map((option) => (
-            <Flex alignItems="center" py={1}>
+          {options.map((option, idx) => (
+            <Flex
+              alignItems="center"
+              py={1}
+              key={`marked-select-answer-group-${idx}`}
+            >
               {correctAnswer.includes(option.id.toString()) &&
               submittedAnswer.includes(option.id.toString()) ? (
                 <CheckIcon mr={4} color="success.500" />

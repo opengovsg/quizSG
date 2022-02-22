@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
-import { Option, Question, Quiz } from '../database/models'
+import { Option, Question, Quiz, Submission } from '../database/models'
 import _ from 'lodash'
 import { CreateQuizResponseDto } from 'creator/dto/create-quiz.dto'
 import { AttemptResponseDto } from 'taker/dto/attempt-quiz.dto'
 import { CreateQuestionResponseDto } from 'question/dto/create-question.dto'
+import { QuizWithSubmissions } from './quiz.types'
 
 @Injectable()
 export class QuizService {
@@ -63,7 +64,19 @@ export class QuizService {
     } as CreateQuizResponseDto
   }
 
-  async getQuiz(quizId: number): Promise<Quiz | null> {
+  async getQuiz(quizId: number): Promise<QuizWithSubmissions | null> {
+    return this.quizModel.findOne({
+      include: [
+        {
+          model: Submission,
+          attributes: ['name', 'scorePercent', 'submittedAt'],
+        },
+      ],
+      where: { id: quizId },
+    })
+  }
+
+  async getQuizWithQuestionsAndOptions(quizId: number): Promise<Quiz | null> {
     return this.quizModel.findOne({
       include: [
         {

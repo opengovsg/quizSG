@@ -1,6 +1,7 @@
 import ApiService from '../baseConfig'
 
 import { Quiz, QuizCreationDto } from './types'
+import { QuizWithSubmissions } from '.'
 
 function createQuiz({
   name,
@@ -29,10 +30,20 @@ function fetchAllQuizzes(): Promise<Quiz[]> {
   return ApiService.get('/creator/quizzes').then((res) => res.data)
 }
 
+function fetchQuizWithSubmissions({
+  id,
+}: {
+  id: string
+}): Promise<QuizWithSubmissions> {
+  console.log('[GET] fetchQuizWithSubmissions')
+  return ApiService.get(`/creator/quiz/${id}`).then((res) => res.data)
+}
+
 const QuizApi = {
   createQuiz,
   deleteQuiz,
   fetchAllQuizzes,
+  fetchQuizWithSubmissions,
 }
 
 export default QuizApi

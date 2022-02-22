@@ -49,8 +49,8 @@ const CreatorLandingPage = (): JSX.Element => {
   // Button handler to navigate to create quiz page
   const onClickCreateQuiz = () => history.push(`${path}/create`)
 
-  // Click handler for each row to navigate to take quiz
-  const onClickQuiz = (quizId: number) => history.push(`/${quizId}`)
+  // Click handler for each row to navigate to quiz result summary page
+  const onClickQuiz = (quizId: number) => history.push(`/creator/${quizId}`)
 
   return (
     <VStack bg="primary.100" minH="100vh">
