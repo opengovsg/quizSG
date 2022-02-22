@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { Button, Input, Radio, Textarea } from '@opengovsg/design-system-react'
 
-const QuestionField = () => {
+const QuestionField = (): JSX.Element => {
   const questionNumber = 1
   const questionType = 'Multiple Choice'
   const choices = [{}, {}, {}, {}]

@@ -43,6 +43,7 @@ export class CreatorController {
 
     // 1. Add row to Quiz table
     const quiz = await this.quizService.createQuiz(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       admin!.id,
       createQuizDto.name,
       createQuizDto.passingPercent,
