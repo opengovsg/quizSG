@@ -49,7 +49,7 @@ const CreatorLandingPage = (): JSX.Element => {
   // Button handler to navigate to create quiz page
   const onClickCreateQuiz = () => history.push(`${path}/create`)
 
-  // Click handler for each row to navigate to take quiz
+  // Click handler for each row to navigate to quiz result summary page
   const onClickQuiz = (quizId: number) => history.push(`/creator/${quizId}`)
 
   return (
