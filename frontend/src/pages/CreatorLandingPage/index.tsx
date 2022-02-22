@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 
+import CreatorQuizSummaryPage from './CreatorQuizSummaryPage'
+
 const CreatorLandingPage = lazy(() => import('./CreatorLandingPage'))
 const CreateQuizPage = lazy(() => import('./CreateQuizPage'))
 
@@ -15,6 +17,9 @@ const CreatorLandingPageRouter = (): JSX.Element => {
         </Route>
         <Route path={`${path}/create`}>
           <CreateQuizPage />
+        </Route>
+        <Route path={`${path}/:quizId`}>
+          <CreatorQuizSummaryPage />
         </Route>
       </Switch>
     </Suspense>
