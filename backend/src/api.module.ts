@@ -57,6 +57,7 @@ const apiModules = [
         }
 
         if (config.get('environment') === 'production') {
+          // eslint-disable-next-line no-console
           console.log(
             `Working in ${config.get('environment')} - activating ssl`
           )
