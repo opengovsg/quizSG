@@ -26,3 +26,15 @@ export type OptionCreationDto = {
   text: string
   isTrue: boolean
 }
+
+export type Submission = {
+  name: string
+  scorePercent: number
+  submittedAt: Date
+}
+
+export type QuizWithSubmissions = Quiz & {
+  submissions: Submission[]
+  numAttempts: number
+  avgScore: number
+}
