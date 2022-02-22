@@ -24,8 +24,12 @@ const MarkedMCQAnswerGroup = ({
           Your Answer
         </Text>
         <RadioGroup value={submittedAnswer.toString()} mt={4}>
-          {options.map((option) => (
-            <Flex alignItems="center" py={1}>
+          {options.map((option, idx) => (
+            <Flex
+              alignItems="center"
+              py={1}
+              key={`marked-mcq-answer-group-${idx}`}
+            >
               {isCorrect ? (
                 <CheckIcon
                   mr={4}
