@@ -36,5 +36,5 @@ export type Submission = {
 export type QuizWithSubmissions = Quiz & {
   submissions: Submission[]
   numAttempts: number
-  avgScore: number
+  avgScore: number | null
 }
