@@ -46,12 +46,13 @@ const OVERVIEW_TABLE_CONFIG = [
   },
 ]
 
-const REPONSES_TABLE_CONFIG = [
+const RESPONSES_TABLE_CONFIG = [
   {
     display: 'Name',
     key: 'name',
     fn: (name: string) => name || '-',
   },
+  // TODO: currently unused. to check on time taken column
   {
     display: 'Time taken',
     key: 'timeTaken',
@@ -194,7 +195,7 @@ const CreatorQuizSummaryPage = (): JSX.Element => {
           <Thead bg="secondary.500">
             <Tr>
               <>
-                {_.map(REPONSES_TABLE_CONFIG, (config) => (
+                {_.map(RESPONSES_TABLE_CONFIG, (config) => (
                   <Th key={config.key} color="white">
                     {config.display}
                   </Th>
@@ -209,7 +210,7 @@ const CreatorQuizSummaryPage = (): JSX.Element => {
               {_.map(quizWithSubmissions.submissions, (submission, idx) => {
                 return (
                   <Tr key={idx}>
-                    {_.map(REPONSES_TABLE_CONFIG, (config) => {
+                    {_.map(RESPONSES_TABLE_CONFIG, (config) => {
                       const { key, fn } = config
                       return <Td key={key}>{fn(_.get(submission, key))}</Td>
                     })}
