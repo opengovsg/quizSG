@@ -21,6 +21,7 @@ import {
 } from './dto/create-quiz.dto'
 import { CreateOptionDB } from 'option/dto/create-option.dto'
 import { IsNumberStringValidator } from 'helpers/isNumberStringValidator'
+import { GetQuizWithSubmissionsResponseDto } from './dto/get-quiz-with-submissions.dto'
 
 @Controller('creator')
 export class CreatorController {
@@ -94,6 +95,33 @@ export class CreatorController {
     if (!admin) throw new InternalServerErrorException('Admin user not present')
     const quizzes = await this.quizService.getAllFromCreator(admin.id)
     res.status(HttpStatus.OK).json(quizzes)
+  }
+
+  @Get('quiz/:id')
+  async get(
+    @Res() res: Response,
+    @Param() param: IsNumberStringValidator
+  ): Promise<void> {
+    // TODO: to refactor when there are more than 1 admin user
+    const admin = await this.userService.getFirst()
+    if (!admin) throw new InternalServerErrorException('Admin user not present')
+    const quiz = await this.quizService.getQuiz(param.id)
+    if (!quiz) throw new NotFoundException()
+
+    const numAttempts = quiz.submissions.length
+    const avgScore =
+      quiz.submissions.reduce(
+        (acc, submission) => acc + submission.scorePercent,
+        0
+      ) / numAttempts
+
+    const response: GetQuizWithSubmissionsResponseDto = {
+      ...quiz.get({ plain: true }),
+      numAttempts,
+      avgScore,
+    }
+
+    res.status(HttpStatus.OK).json(response)
   }
 
   @Delete('quiz/:id')
