@@ -20,7 +20,7 @@ import {
   CreateQuizResponseDto,
 } from './dto/create-quiz.dto'
 import { CreateOptionDB } from 'option/dto/create-option.dto'
-import { IsNumberStringValidator } from 'helpers/isNumberStringValidator'
+import { IsQuizIdPresentValidator } from 'helpers'
 import { GetQuizWithSubmissionsResponseDto } from './dto/get-quiz-with-submissions.dto'
 
 @Controller('creator')
@@ -101,12 +101,12 @@ export class CreatorController {
   @Get('quiz/:id')
   async get(
     @Res() res: Response,
-    @Param() param: IsNumberStringValidator
+    @Param() { id: quizId }: IsQuizIdPresentValidator
   ): Promise<void> {
     // TODO: to refactor when there are more than 1 admin user
     const admin = await this.userService.getFirst()
     if (!admin) throw new InternalServerErrorException('Admin user not present')
-    const quiz = await this.quizService.getQuiz(param.id)
+    const quiz = await this.quizService.getQuiz(quizId)
     if (!quiz) throw new NotFoundException()
 
     const numAttempts = quiz.submissions.length
@@ -128,12 +128,12 @@ export class CreatorController {
   @Delete('quiz/:id')
   async deleteOne(
     @Res() res: Response,
-    @Param() param: IsNumberStringValidator
+    @Param() { id: quizId }: IsQuizIdPresentValidator
   ): Promise<void> {
     // TODO: to refactor when there are more than 1 admin user
     const admin = await this.userService.getFirst()
     if (!admin) throw new InternalServerErrorException('Admin user not present')
-    const numDeleted = await this.quizService.deleteOnQuizId(param.id, admin.id)
+    const numDeleted = await this.quizService.deleteOnQuizId(quizId, admin.id)
     // TODO: to separate out 403 and 404 errors
     if (numDeleted === 0) throw new NotFoundException()
     res.status(HttpStatus.NO_CONTENT).send()

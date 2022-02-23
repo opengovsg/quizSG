@@ -7,6 +7,7 @@ import { CreateQuizResponseDto } from 'creator/dto/create-quiz.dto'
 import { AttemptResponseDto } from 'taker/dto/attempt-quiz.dto'
 import { CreateQuestionResponseDto } from 'question/dto/create-question.dto'
 import { QuizWithSubmissions } from './quiz.types'
+import { ulid } from 'ulid'
 
 @Injectable()
 export class QuizService {
@@ -31,6 +32,7 @@ export class QuizService {
         passingPercent,
         description,
         organisation,
+        randomId: ulid(),
       }),
       'dataValues'
     )
@@ -40,7 +42,7 @@ export class QuizService {
     return this.quizModel.findAll({ where: { ownerId: userId } })
   }
 
-  async deleteOnQuizId(quizId: number, userId: number): Promise<number> {
+  async deleteOnQuizId(quizId: string, userId: number): Promise<number> {
     return this.quizModel.destroy({
       where: { id: quizId, ownerId: userId },
     })
@@ -65,7 +67,7 @@ export class QuizService {
     } as CreateQuizResponseDto
   }
 
-  async getQuiz(quizId: number): Promise<QuizWithSubmissions | null> {
+  async getQuiz(quizId: string): Promise<QuizWithSubmissions | null> {
     return this.quizModel.findOne({
       include: [
         {
@@ -73,11 +75,11 @@ export class QuizService {
           attributes: ['name', 'scorePercent', 'submittedAt'],
         },
       ],
-      where: { id: quizId },
+      where: { randomId: quizId },
     })
   }
 
-  async getQuizWithQuestionsAndOptions(quizId: number): Promise<Quiz | null> {
+  async getQuizWithQuestionsAndOptions(quizId: string): Promise<Quiz | null> {
     return this.quizModel.findOne({
       include: [
         {
@@ -89,7 +91,7 @@ export class QuizService {
           ],
         },
       ],
-      where: { id: quizId },
+      where: { randomId: quizId },
     })
   }
 

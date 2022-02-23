@@ -51,6 +51,12 @@ export class Quiz extends Model {
   })
   organisation!: string
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  randomId!: string
+
   @BelongsTo(() => User)
   user!: User
 

@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common'
 import { Response, Request } from 'express'
 import { QuizService } from 'quiz/quiz.service'
-import { IsNumberStringValidator } from 'helpers/isNumberStringValidator'
+import { IsQuizIdPresentValidator } from 'helpers'
 import { SubmissionRequestDto } from './dto/submit-quiz.dto'
 import { TakerService } from './taker.service'
 
@@ -28,9 +28,9 @@ export class TakerController {
   @Get('quiz/:id/attempt')
   async getAll(
     @Res() res: Response,
-    @Param() param: IsNumberStringValidator
+    @Param() { id: quizId }: IsQuizIdPresentValidator
   ): Promise<void> {
-    const quiz = await this.quizService.getQuizWithQuestionsAndOptions(param.id)
+    const quiz = await this.quizService.getQuizWithQuestionsAndOptions(quizId)
 
     // TODO: subset, randomization on questions and options
     // TODO: store quiz to user session (to prevent foul play on submission!)
@@ -46,9 +46,9 @@ export class TakerController {
     @Req() req: Request,
     @Res() res: Response,
     @Body() submission: SubmissionRequestDto,
-    @Param() param: IsNumberStringValidator
+    @Param() { id: quizId }: IsQuizIdPresentValidator
   ): Promise<void> {
-    const quiz = await this.quizService.getQuizWithQuestionsAndOptions(param.id)
+    const quiz = await this.quizService.getQuizWithQuestionsAndOptions(quizId)
 
     if (!quiz) throw new NotFoundException()
     try {
