@@ -53,6 +53,7 @@ export class Quiz extends Model {
 
   @Column({
     type: DataType.STRING,
+    unique: true,
     allowNull: false,
   })
   randomId!: string
