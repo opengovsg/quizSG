@@ -18,7 +18,7 @@ import moment from 'moment-timezone'
 import { useFetchQuizWithSubmissions } from '~hooks/Creator'
 import Header from '~components/Header'
 
-import { convertDecimalToPercent } from './utils'
+import { convertDecimalToPercent, generateWeblinkDisplay } from './utils'
 
 const OVERVIEW_TABLE_CONFIG = [
   {
@@ -92,7 +92,7 @@ const CreatorQuizSummaryPage = (): JSX.Element => {
   const onClickBackToDashboard = () => history.replace('/creator')
 
   // TODO: to implement logic
-  const onClickGetQuizLink = () => alert(`${window.location.origin}/${quizId}`)
+  const onClickGetQuizLink = () => generateWeblinkDisplay(quizId)
   // TODO: to implement logic
   const onClickEditQuizLink = () => console.log('edit quiz link button pressed')
   // TODO: to implement logic
