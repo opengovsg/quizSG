@@ -170,7 +170,7 @@ const CreatorQuizSummaryPage = (): JSX.Element => {
           {fetchQuizWithSubmissionsStatus === 'success' &&
           quizWithSubmissions ? (
             <Tbody>
-              <Tr key={quizWithSubmissions.id}>
+              <Tr key={quizWithSubmissions.randomId}>
                 {_.map(OVERVIEW_TABLE_CONFIG, (config) => {
                   const { key, fn } = config
                   return (
