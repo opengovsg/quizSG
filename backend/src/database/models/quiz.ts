@@ -52,7 +52,7 @@ export class Quiz extends Model {
   organisation!: string
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.STRING(26),
     unique: true,
     allowNull: false,
   })
