@@ -24,8 +24,13 @@ const CREATE_QUIZ_BUTTON_TEXT = 'Create new quiz'
 
 const TABLE_CONFIG = [
   {
+    display: 'S/N',
+    key: '',
+    fn: (_unused: string) => '',
+  },
+  {
     display: 'Quiz ID',
-    key: 'id',
+    key: 'randomId',
     fn: (id: string) => id || '',
   },
   {
@@ -50,7 +55,7 @@ const CreatorLandingPage = (): JSX.Element => {
   const onClickCreateQuiz = () => history.push(`${path}/create`)
 
   // Click handler for each row to navigate to quiz result summary page
-  const onClickQuiz = (quizId: number) => history.push(`/creator/${quizId}`)
+  const onClickQuiz = (randomId: string) => history.push(`/creator/${randomId}`)
 
   return (
     <VStack bg="primary.100" minH="100vh">
@@ -83,21 +88,25 @@ const CreatorLandingPage = (): JSX.Element => {
           {/* Show quiz in table when call succeeds */}
           {fetchAllQuizzesStatus === 'success' ? (
             <Tbody>
-              {_.map(allQuizzes, (quiz) => {
-                const { id } = quiz
+              {_.map(allQuizzes, (quiz, sn) => {
+                const { randomId } = quiz
                 return (
                   <Tr
-                    key={id}
-                    onClick={() => onClickQuiz(id)}
+                    key={randomId}
+                    onClick={() => onClickQuiz(randomId)}
                     _hover={{
                       background: 'white',
                       color: 'primary.500',
                       cursor: 'pointer',
                     }}
                   >
-                    {_.map(TABLE_CONFIG, (config) => {
+                    {_.map(TABLE_CONFIG, (config, idx) => {
                       const { key, fn } = config
-                      return <Td key={key}>{fn(_.get(quiz, key))}</Td>
+                      return (
+                        <Td key={key}>
+                          {idx === 0 ? sn + 1 : fn(_.get(quiz, key))}
+                        </Td>
+                      )
                     })}
                   </Tr>
                 )

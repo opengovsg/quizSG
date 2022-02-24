@@ -8,6 +8,7 @@ export type QuizCreationDto = {
 
 export type Quiz = QuizCreationDto & {
   id: number
+  randomId: string
   ownerId: number
   createdAt: string
   updatedAt: string
