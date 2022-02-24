@@ -44,7 +44,7 @@ export class QuizService {
 
   async deleteOnQuizId(quizId: string, userId: number): Promise<number> {
     return this.quizModel.destroy({
-      where: { id: quizId, ownerId: userId },
+      where: { randomId: quizId, ownerId: userId },
     })
   }
 
