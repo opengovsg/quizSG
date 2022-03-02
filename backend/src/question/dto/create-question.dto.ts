@@ -1,13 +1,16 @@
+import { Type } from 'class-transformer'
 import {
   MinLength,
   IsIn,
   IsInt,
   Min,
-  IsNotEmpty,
   ValidateIf,
+  ArrayNotEmpty,
+  ValidateNested,
 } from 'class-validator'
 import { Option, Question, QuestionType, QUESTION_TYPES } from 'database/models'
 import { CreateOptionRequestDto } from 'option/dto/create-option.dto'
+import { QuestionEditableFields } from 'question/question.types'
 
 export class CreateQuestionRequestDto {
   @MinLength(1)
@@ -30,11 +33,13 @@ export class CreateQuestionRequestDto {
   @Min(0)
   pointValue!: number
 
-  @IsNotEmpty()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => CreateOptionRequestDto)
   options!: CreateOptionRequestDto[]
 }
 
-export type CreateQuestionDB = Omit<CreateQuestionRequestDto, 'options'> & {
+export type CreateQuestionDB = QuestionEditableFields & {
   quizId: number
 }
 

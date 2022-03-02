@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { Option } from '../database/models'
 import { CreateOptionDB } from './dto/create-option.dto'
-import _ from 'lodash'
+import { get } from 'lodash'
 
 @Injectable()
 export class OptionService {
@@ -13,7 +13,9 @@ export class OptionService {
 
   async bulkCreate(optionsData: CreateOptionDB[]): Promise<Option[]> {
     // TODO: find a way to not use lodash wrapper
-    const rawData = await this.optionModel.bulkCreate(optionsData)
-    return rawData.map((data) => _.get(data, 'dataValues'))
+    const rawData = await this.optionModel.bulkCreate(optionsData, {
+      validate: true,
+    })
+    return rawData.map((data) => get(data, 'dataValues'))
   }
 }
