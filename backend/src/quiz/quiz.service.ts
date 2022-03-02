@@ -2,11 +2,11 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { Option, Question, Quiz, Submission } from '../database/models'
-import _ from 'lodash'
+import { get } from 'lodash'
 import { CreateQuizResponseDto } from 'creator/dto/create-quiz.dto'
 import { AttemptResponseDto } from 'taker/dto/attempt-quiz.dto'
 import { CreateQuestionResponseDto } from 'question/dto/create-question.dto'
-import { QuizWithSubmissions } from './quiz.types'
+import { QuizEditableFields, QuizWithSubmissions } from './quiz.types'
 import { ulid } from 'ulid'
 
 @Injectable()
@@ -17,21 +17,12 @@ export class QuizService {
   ) {}
 
   // TODO: incomplete. missing quiz questions
-  async createQuiz(
-    userId: number,
-    name: string,
-    passingPercent: number,
-    description: string,
-    organisation: string
-  ): Promise<Quiz> {
+  async createQuiz(userId: number, fields: QuizEditableFields): Promise<Quiz> {
     // TODO: find a way to not use lodash wrapper
-    return _.get(
+    return get(
       await this.quizModel.create({
-        name,
         ownerId: userId,
-        passingPercent,
-        description,
-        organisation,
+        ...fields,
         randomId: ulid(),
       }),
       'dataValues'

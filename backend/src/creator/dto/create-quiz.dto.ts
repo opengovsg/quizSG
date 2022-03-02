@@ -1,4 +1,12 @@
-import { MinLength, IsNumber, Min, Max, IsNotEmpty } from 'class-validator'
+import { Type } from 'class-transformer'
+import {
+  MinLength,
+  IsNumber,
+  Min,
+  Max,
+  ArrayNotEmpty,
+  ValidateNested,
+} from 'class-validator'
 import { Quiz } from 'database/models'
 import {
   CreateQuestionRequestDto,
@@ -20,7 +28,9 @@ export class CreateQuizRequestDto {
   @MinLength(1)
   organisation!: string
 
-  @IsNotEmpty()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => CreateQuestionRequestDto)
   questions!: CreateQuestionRequestDto[]
 }
 

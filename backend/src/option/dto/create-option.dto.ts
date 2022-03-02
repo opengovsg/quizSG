@@ -1,5 +1,6 @@
 import { MinLength, IsBoolean } from 'class-validator'
 import { Option } from 'database/models'
+import { OptionEditableFields } from 'option/options.types'
 
 export class CreateOptionRequestDto {
   @MinLength(1)
@@ -9,7 +10,7 @@ export class CreateOptionRequestDto {
   isTrue!: boolean
 }
 
-export type CreateOptionDB = CreateOptionRequestDto & {
+export type CreateOptionDB = OptionEditableFields & {
   questionId: number
 }
 
